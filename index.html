@@ -454,6 +454,195 @@ a { text-decoration: none; color: inherit; }
 }
 .btn-dark:hover { background: var(--forest); letter-spacing: 0.2em; }
 
+/* ─── QUIZ TRIGGER SECTION ───────────────────── */
+.quiz-trigger {
+  background: var(--ink);
+  padding: clamp(3.5rem,7vw,5rem) clamp(1.5rem,5vw,4rem);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 2rem; flex-wrap: wrap;
+}
+.quiz-trigger-copy { max-width: 600px; }
+.quiz-trigger-eyebrow {
+  font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.75rem;
+}
+.quiz-trigger-title {
+  font-family: var(--serif); font-weight: 300;
+  font-size: clamp(1.6rem,3.5vw,2.4rem); color: var(--bone);
+  line-height: 1.2;
+}
+.quiz-trigger-title em { font-style: italic; color: var(--gold-lt); }
+.quiz-trigger-sub {
+  font-size: 0.85rem; font-weight: 300; line-height: 1.75;
+  color: rgba(237,232,223,0.55); margin-top: 0.75rem;
+}
+.btn-quiz {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  font-family: var(--sans); font-size: 0.68rem; font-weight: 400;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--ink); background: var(--gold);
+  padding: 1rem 2.2rem; white-space: nowrap; flex-shrink: 0;
+  cursor: pointer; border: none; outline: none;
+  -webkit-appearance: none; appearance: none;
+  transition: background 0.25s, letter-spacing 0.25s;
+}
+.btn-quiz:hover { background: var(--gold-lt); letter-spacing: 0.2em; }
+.btn-quiz-glyph { font-style: normal; font-size: 0.9rem; }
+
+/* ─── QUIZ OVERLAY ───────────────────────────── */
+.quiz-overlay {
+  position: fixed; inset: 0; z-index: 600;
+  background: rgba(11,15,14,0); pointer-events: none;
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.5rem; transition: background 0.4s;
+}
+.quiz-overlay.open { background: rgba(11,15,14,0.96); pointer-events: all; }
+
+.quiz-panel {
+  background: var(--forest); border: 1px solid rgba(184,154,106,0.15);
+  width: 100%; max-width: 680px; max-height: 90vh; overflow-y: auto;
+  position: relative;
+  opacity: 0; transform: translateY(24px) scale(0.97);
+  transition: opacity 0.4s, transform 0.4s;
+}
+.quiz-overlay.open .quiz-panel { opacity: 1; transform: none; }
+
+.quiz-header {
+  padding: 1.8rem 2.2rem 1.2rem;
+  border-bottom: 1px solid rgba(184,154,106,0.1);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.quiz-brand {
+  font-family: var(--serif); font-size: 1rem; font-style: italic;
+  color: rgba(237,232,223,0.5); letter-spacing: 0.05em;
+}
+.quiz-close {
+  background: none; border: none; outline: none; cursor: pointer;
+  -webkit-appearance: none; appearance: none;
+  color: var(--muted); font-size: 1.1rem; line-height: 1;
+  transition: color 0.2s;
+}
+.quiz-close:hover { color: var(--bone); }
+
+/* progress bar */
+.quiz-progress-wrap {
+  height: 2px; background: rgba(184,154,106,0.12);
+}
+.quiz-progress-bar {
+  height: 100%; background: var(--gold);
+  transition: width 0.55s cubic-bezier(0.22,1,0.36,1);
+}
+
+.quiz-body { padding: 2.6rem 2.2rem 2.2rem; }
+
+.quiz-step { display: none; }
+.quiz-step.active {
+  display: block;
+  animation: qFadeIn 0.4s ease;
+}
+@keyframes qFadeIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.quiz-q-num {
+  font-size: 0.62rem; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.9rem;
+}
+.quiz-q-text {
+  font-family: var(--serif); font-weight: 300;
+  font-size: clamp(1.2rem,2.5vw,1.6rem); line-height: 1.35;
+  color: var(--bone); margin-bottom: 2rem;
+}
+.quiz-q-text em { font-style: italic; color: var(--gold-lt); }
+
+.quiz-options { display: flex; flex-direction: column; gap: 0.75rem; }
+.quiz-option {
+  display: flex; align-items: flex-start; gap: 1rem;
+  padding: 1.1rem 1.3rem; cursor: pointer;
+  border: 1px solid rgba(184,154,106,0.14);
+  background: rgba(255,255,255,0.03);
+  transition: border-color 0.25s, background 0.25s, transform 0.2s;
+  position: relative;
+}
+.quiz-option:hover {
+  border-color: rgba(184,154,106,0.4);
+  background: rgba(184,154,106,0.06);
+  transform: translateX(4px);
+}
+.quiz-option.selected {
+  border-color: var(--gold);
+  background: rgba(184,154,106,0.12);
+}
+.quiz-option-key {
+  font-size: 0.65rem; letter-spacing: 0.18em; color: var(--gold);
+  text-transform: uppercase; flex-shrink: 0; padding-top: 0.1rem;
+}
+.quiz-option-text {
+  font-size: 0.9rem; font-weight: 300; line-height: 1.6;
+  color: rgba(237,232,223,0.82);
+}
+.quiz-option.selected .quiz-option-text { color: var(--bone); }
+
+/* nav row */
+.quiz-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 2rem; padding-top: 1.4rem;
+  border-top: 1px solid rgba(184,154,106,0.1);
+}
+.quiz-back {
+  background: none; border: none; outline: none; cursor: pointer;
+  -webkit-appearance: none; appearance: none;
+  font-family: var(--sans); font-size: 0.68rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--muted);
+  transition: color 0.2s;
+}
+.quiz-back:hover { color: var(--bone); }
+.quiz-next {
+  display: inline-flex; font-family: var(--sans); font-size: 0.68rem;
+  font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--ink); background: var(--gold); padding: 0.75rem 1.8rem;
+  white-space: nowrap; flex-shrink: 0; border: none; outline: none;
+  cursor: pointer; -webkit-appearance: none; appearance: none;
+  opacity: 0.35; pointer-events: none;
+  transition: opacity 0.25s, background 0.25s, letter-spacing 0.25s;
+}
+.quiz-next.enabled { opacity: 1; pointer-events: all; }
+.quiz-next.enabled:hover { background: var(--gold-lt); letter-spacing: 0.2em; }
+
+/* ─── QUIZ RESULT ────────────────────────────── */
+.quiz-result { display: none; padding: 2.6rem 2.2rem 2.6rem; }
+.quiz-result.active { display: block; animation: qFadeIn 0.5s ease; }
+.quiz-result-eyebrow {
+  font-size: 0.62rem; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.6rem;
+}
+.quiz-result-area {
+  font-family: var(--serif); font-size: clamp(1.8rem,4vw,2.8rem);
+  font-weight: 300; font-style: italic; color: var(--bone);
+  line-height: 1.1; margin-bottom: 1.2rem;
+}
+.quiz-result-desc {
+  font-size: 0.9rem; font-weight: 300; line-height: 1.85;
+  color: rgba(237,232,223,0.68); margin-bottom: 1.6rem;
+}
+.quiz-result-quote {
+  font-family: var(--serif); font-size: clamp(1rem,2vw,1.2rem);
+  font-style: italic; line-height: 1.65; color: var(--gold-lt);
+  padding-left: 1.1rem; border-left: 2px solid rgba(184,154,106,0.4);
+  margin-bottom: 2rem;
+}
+.quiz-result-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+.quiz-retake {
+  display: inline-flex; font-family: var(--sans); font-size: 0.68rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--muted); background: none; border: 1px solid rgba(184,154,106,0.2);
+  padding: 0.75rem 1.6rem; white-space: nowrap; flex-shrink: 0;
+  cursor: pointer; -webkit-appearance: none; appearance: none; outline: none;
+  transition: border-color 0.25s, color 0.25s;
+}
+.quiz-retake:hover { border-color: var(--gold); color: var(--bone); }
+
 /* ─── FOOTER ─────────────────────────────────── */
 footer {
   background: var(--ink); border-radius: 3rem 3rem 0 0;
@@ -545,6 +734,18 @@ footer {
 <div class="marquee-wrap">
   <div class="marquee-track" id="marqueeTrack"></div>
 </div>
+
+<!-- QUIZ TRIGGER -->
+<section class="quiz-trigger rv">
+  <div class="quiz-trigger-copy">
+    <p class="quiz-trigger-eyebrow">2-Minute Self-Discovery</p>
+    <h2 class="quiz-trigger-title">Which area of your life is calling<br>for <em>reclamation?</em></h2>
+    <p class="quiz-trigger-sub">5 questions. No email required. Just clarity.</p>
+  </div>
+  <button class="btn-quiz" id="openQuiz">
+    <span class="btn-quiz-glyph">✦</span> Take the Quiz
+  </button>
+</section>
 
 <!-- SERVICES -->
 <section class="services" id="services">
@@ -641,6 +842,116 @@ footer {
     </div>
   </div>
 </section>
+
+<!-- QUIZ OVERLAY -->
+<div class="quiz-overlay" id="quizOverlay">
+  <div class="quiz-panel" id="quizPanel">
+
+    <div class="quiz-header">
+      <span class="quiz-brand">Winter Jane</span>
+      <button class="quiz-close" id="quizClose">✕</button>
+    </div>
+    <div class="quiz-progress-wrap">
+      <div class="quiz-progress-bar" id="quizProgress" style="width:0%"></div>
+    </div>
+
+    <div class="quiz-body" id="quizBody">
+
+      <!-- Q1 -->
+      <div class="quiz-step active" data-q="0">
+        <p class="quiz-q-num">Question 1 of 5</p>
+        <h3 class="quiz-q-text">When you lie awake at 3am, what's most often <em>running through your mind?</em></h3>
+        <div class="quiz-options">
+          <div class="quiz-option" data-val="R"><span class="quiz-option-key">A</span><span class="quiz-option-text">A relationship — someone I love, something I've lost, or the way I keep choosing wrong</span></div>
+          <div class="quiz-option" data-val="C"><span class="quiz-option-key">B</span><span class="quiz-option-text">My work — whether I'm on the right path, or whether I can keep this pace</span></div>
+          <div class="quiz-option" data-val="M"><span class="quiz-option-key">C</span><span class="quiz-option-text">A feeling I can't name — exhaustion, resentment, or the sense that something has to give</span></div>
+          <div class="quiz-option" data-val="W"><span class="quiz-option-key">D</span><span class="quiz-option-text">All of the above — it rotates depending on the night</span></div>
+        </div>
+        <div class="quiz-nav">
+          <span></span>
+          <button class="quiz-next" id="quizNext0">Continue →</button>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="quiz-step" data-q="1">
+        <p class="quiz-q-num">Question 2 of 5</p>
+        <h3 class="quiz-q-text">Which of these phrases <em>lands the hardest?</em></h3>
+        <div class="quiz-options">
+          <div class="quiz-option" data-val="R"><span class="quiz-option-key">A</span><span class="quiz-option-text">"I keep choosing people who need me to be strong — and I'm so tired of being strong"</span></div>
+          <div class="quiz-option" data-val="C"><span class="quiz-option-key">B</span><span class="quiz-option-text">"I built this career, but I don't recognize myself inside it anymore"</span></div>
+          <div class="quiz-option" data-val="M"><span class="quiz-option-key">C</span><span class="quiz-option-text">"My body is exhausted in a way that sleep doesn't fix"</span></div>
+          <div class="quiz-option" data-val="W"><span class="quiz-option-key">D</span><span class="quiz-option-text">"I've outgrown something — I just don't know what"</span></div>
+        </div>
+        <div class="quiz-nav">
+          <button class="quiz-back" data-to="0">← Back</button>
+          <button class="quiz-next" id="quizNext1">Continue →</button>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="quiz-step" data-q="2">
+        <p class="quiz-q-num">Question 3 of 5</p>
+        <h3 class="quiz-q-text">Where does your body hold the <em>most tension?</em></h3>
+        <div class="quiz-options">
+          <div class="quiz-option" data-val="R"><span class="quiz-option-key">A</span><span class="quiz-option-text">My chest — love and closeness are where I feel least safe</span></div>
+          <div class="quiz-option" data-val="C"><span class="quiz-option-key">B</span><span class="quiz-option-text">My shoulders and jaw — I've been performing capability for a long time</span></div>
+          <div class="quiz-option" data-val="M"><span class="quiz-option-key">C</span><span class="quiz-option-text">My gut — there's a low-level dread I can't locate or explain</span></div>
+          <div class="quiz-option" data-val="W"><span class="quiz-option-key">D</span><span class="quiz-option-text">Everywhere — I've been disconnected from my body for so long I've stopped listening</span></div>
+        </div>
+        <div class="quiz-nav">
+          <button class="quiz-back" data-to="1">← Back</button>
+          <button class="quiz-next" id="quizNext2">Continue →</button>
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="quiz-step" data-q="3">
+        <p class="quiz-q-num">Question 4 of 5</p>
+        <h3 class="quiz-q-text">If you're honest with yourself — what are you <em>most tired of performing?</em></h3>
+        <div class="quiz-options">
+          <div class="quiz-option" data-val="R"><span class="quiz-option-key">A</span><span class="quiz-option-text">Being fine. Being easy. Being the one who doesn't need too much</span></div>
+          <div class="quiz-option" data-val="C"><span class="quiz-option-key">B</span><span class="quiz-option-text">Being productive. Being ambitious. Building from pressure instead of purpose</span></div>
+          <div class="quiz-option" data-val="M"><span class="quiz-option-key">C</span><span class="quiz-option-text">Being responsible for everyone's feelings but my own</span></div>
+          <div class="quiz-option" data-val="W"><span class="quiz-option-key">D</span><span class="quiz-option-text">All of it. I'm tired of surviving inside a life I've outgrown</span></div>
+        </div>
+        <div class="quiz-nav">
+          <button class="quiz-back" data-to="2">← Back</button>
+          <button class="quiz-next" id="quizNext3">Continue →</button>
+        </div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="quiz-step" data-q="4">
+        <p class="quiz-q-num">Question 5 of 5</p>
+        <h3 class="quiz-q-text">If you could have one thing <em>restored,</em> what would it be?</h3>
+        <div class="quiz-options">
+          <div class="quiz-option" data-val="R"><span class="quiz-option-key">A</span><span class="quiz-option-text">The ability to trust — myself, someone I love, or love itself</span></div>
+          <div class="quiz-option" data-val="C"><span class="quiz-option-key">B</span><span class="quiz-option-text">A sense of purpose that doesn't cost me my health or identity</span></div>
+          <div class="quiz-option" data-val="M"><span class="quiz-option-key">C</span><span class="quiz-option-text">Peace inside my own body — quiet where there is only noise right now</span></div>
+          <div class="quiz-option" data-val="W"><span class="quiz-option-key">D</span><span class="quiz-option-text">Myself — I want me back. All of me</span></div>
+        </div>
+        <div class="quiz-nav">
+          <button class="quiz-back" data-to="3">← Back</button>
+          <button class="quiz-next" id="quizNext4">See My Result →</button>
+        </div>
+      </div>
+
+      <!-- RESULT -->
+      <div class="quiz-result" id="quizResult">
+        <p class="quiz-result-eyebrow" id="resEyebrow">Your reclamation area</p>
+        <h3 class="quiz-result-area" id="resArea"></h3>
+        <p class="quiz-result-desc" id="resDesc"></p>
+        <blockquote class="quiz-result-quote" id="resQuote"></blockquote>
+        <div class="quiz-result-actions">
+          <a href="https://thisiswinterjane.com/" target="_blank" class="btn-primary">Fill Out the Intake Form</a>
+          <button class="quiz-retake" id="quizRetake">Retake the Quiz</button>
+        </div>
+      </div>
+
+    </div><!-- /quiz-body -->
+  </div><!-- /quiz-panel -->
+</div><!-- /quiz-overlay -->
 
 <!-- TESTIMONIAL LIGHTBOX -->
 <div class="testi-lightbox" id="testiLightbox">
@@ -788,6 +1099,134 @@ lbClose.addEventListener('click', closeLb);
 lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
 function closeLb() { lb.classList.remove('open'); document.body.style.overflow = ''; }
+
+// ── Quiz ────────────────────────────────────────────────────
+const RESULTS = {
+  R: {
+    area: 'Relationships & Love',
+    desc: 'Your deepest work lives in the space between you and the people you love — or want to love. You\'ve been the strong one, the easy one, the one who performs connection while longing for the real thing. The pattern that taught you to leave yourself to keep the peace is ready to be interrupted.',
+    quote: '"For the woman learning to love, receive, grieve, desire, and choose without leaving herself. We work with attachment, safe love, sexuality, romantic grief, self-trust, and the patterns that taught you to perform connection."'
+  },
+  C: {
+    area: 'Career & Purpose',
+    desc: 'You look successful from the outside. You\'ve built something real. But something in your body knows that the version of ambition that got you here is no longer yours. The identity that got you here is asking to be shed — not because you failed, but because you\'ve grown past it.',
+    quote: '"For the woman who looks successful, but feels exhausted by the identity that got her here. We work with burnout, support resistance, over-performing, visibility fatigue, and the body\'s refusal to keep building from pressure."'
+  },
+  M: {
+    area: 'Mental Wellbeing & Inner Architecture',
+    desc: 'Your body has been telling the truth long before your mind could explain it. The resentment, the exhaustion, the guilt you can\'t shake — these aren\'t signs of weakness. They\'re signs of a woman who has been managing everyone\'s emotional world except her own. A new inner architecture is possible.',
+    quote: '"For the woman whose body is telling the truth before her mind can explain it. We work with resentment, family guilt, emotional over-responsibility, avoidance, urgency and the need for a new inner architecture."'
+  },
+  W: {
+    area: 'Wild Feminine Recode',
+    desc: 'You\'re not broken in one place — you\'ve been surviving across all of them at once. Relationships, career, your own body — all of it is asking to be reclaimed. This isn\'t about choosing one thread to pull. This is the full reclamation: power, softness, truth, and self-trust restored together.',
+    quote: '"Wild Feminine Recode is private support for the woman ready to return to her power, softness, truth and self-trust."'
+  }
+};
+
+const quizOverlay = document.getElementById('quizOverlay');
+const quizProgress = document.getElementById('quizProgress');
+const quizResult = document.getElementById('quizResult');
+const answers = {};
+let currentQ = 0;
+const totalQ = 5;
+
+function openQuiz() {
+  quizOverlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  // reset
+  resetQuiz();
+}
+function closeQuiz() {
+  quizOverlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+function resetQuiz() {
+  Object.keys(answers).forEach(k => delete answers[k]);
+  currentQ = 0;
+  document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('active'));
+  quizResult.classList.remove('active');
+  document.querySelector('.quiz-step[data-q="0"]').classList.add('active');
+  document.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+  document.querySelectorAll('.quiz-next').forEach(b => b.classList.remove('enabled'));
+  updateProgress(0);
+}
+function updateProgress(q) {
+  quizProgress.style.width = ((q / totalQ) * 100) + '%';
+}
+function goToQ(n) {
+  document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('active'));
+  const step = document.querySelector(`.quiz-step[data-q="${n}"]`);
+  if (step) {
+    step.classList.add('active');
+    currentQ = n;
+    updateProgress(n);
+    // restore selection if revisiting
+    if (answers[n] !== undefined) {
+      step.querySelectorAll('.quiz-option').forEach(o => {
+        o.classList.toggle('selected', o.dataset.val === answers[n]);
+      });
+      step.querySelector('.quiz-next')?.classList.add('enabled');
+    }
+  }
+  document.getElementById('quizPanel').scrollTop = 0;
+}
+function showResult() {
+  // tally
+  const counts = { R:0, C:0, M:0, W:0 };
+  Object.values(answers).forEach(v => { if (counts[v] !== undefined) counts[v]++; });
+  let winner = Object.entries(counts).sort((a,b) => b[1]-a[1])[0][0];
+  // if tied on W vs anything, prefer W for the "whole recode" result
+  const max = Math.max(...Object.values(counts));
+  const winners = Object.entries(counts).filter(([,v]) => v === max).map(([k]) => k);
+  if (winners.length > 1) winner = winners.includes('W') ? 'W' : winners[0];
+
+  const res = RESULTS[winner];
+  document.getElementById('resArea').textContent = res.area;
+  document.getElementById('resDesc').textContent = res.desc;
+  document.getElementById('resQuote').textContent = res.quote;
+
+  document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('active'));
+  quizResult.classList.add('active');
+  updateProgress(totalQ);
+  document.getElementById('quizPanel').scrollTop = 0;
+}
+
+// open / close
+document.getElementById('openQuiz').addEventListener('click', openQuiz);
+document.getElementById('quizClose').addEventListener('click', closeQuiz);
+quizOverlay.addEventListener('click', e => { if (e.target === quizOverlay) closeQuiz(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && quizOverlay.classList.contains('open')) closeQuiz(); });
+document.getElementById('quizRetake').addEventListener('click', resetQuiz);
+
+// option selection
+document.querySelectorAll('.quiz-option').forEach(opt => {
+  opt.addEventListener('click', () => {
+    const step = opt.closest('.quiz-step');
+    const q = parseInt(step.dataset.q);
+    step.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+    opt.classList.add('selected');
+    answers[q] = opt.dataset.val;
+    step.querySelector('.quiz-next')?.classList.add('enabled');
+  });
+});
+
+// next buttons
+for (let i = 0; i < totalQ; i++) {
+  const btn = document.getElementById(`quizNext${i}`);
+  if (!btn) continue;
+  const isLast = i === totalQ - 1;
+  btn.addEventListener('click', () => {
+    if (!btn.classList.contains('enabled')) return;
+    if (isLast) { showResult(); }
+    else { goToQ(i + 1); }
+  });
+}
+
+// back buttons
+document.querySelectorAll('.quiz-back').forEach(btn => {
+  btn.addEventListener('click', () => goToQ(parseInt(btn.dataset.to)));
+});
 
 // ── Begin — Sacred Scan Beam ─────────────────────────────────
 // Gold beam sweeps each step column, lighting content as it passes
