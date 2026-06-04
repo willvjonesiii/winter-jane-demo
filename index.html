@@ -12,706 +12,467 @@
 <link rel="preload" as="image" href="https://thisiswinterjane.com/_assets/media/543f3c78d3a913eaa7deb8e61cdcd688.jpg">
 
 <style>
-/* ─── TOKENS ──────────────────────────────────────────── */
+/* ─── TOKENS ─────────────────────────────────── */
 :root {
-  --ink:     #1a1815;
-  --charcoal:#2e2e2e;
-  --cream:   #dbcbac;
-  --cream-lt:#e8dcc6;
-  --ivory:   #f5f0e8;
-  --white:   #ffffff;
-  --smoke:   #424242;
-  --muted:   #8a836e;
+  --ink:     #0b0f0e;
+  --forest:  #1f2e28;
+  --sage:    #3d5c50;
+  --bone:    #ede8df;
+  --gold:    #b89a6a;
+  --gold-lt: #d4b98a;
+  --ivory:   #f5f0e6;
+  --muted:   #7a8c7e;
   --serif:   'Cormorant Garamond', Georgia, serif;
   --sans:    'DM Sans', system-ui, sans-serif;
 }
 
-/* ─── RESET ───────────────────────────────────────────── */
+/* ─── RESET ──────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
   font-family: var(--sans);
   font-weight: 300;
   color: var(--ink);
-  background: var(--white);
+  background: var(--ivory);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
 img { display: block; max-width: 100%; }
 a { text-decoration: none; color: inherit; }
 
-/* ─── CUSTOM CURSOR (desktop only) ───────────────────── */
+/* ─── CUSTOM CURSOR ──────────────────────────── */
 @media (hover: hover) {
   body { cursor: none; }
   .cursor {
     position: fixed; top: 0; left: 0;
-    width: 8px; height: 8px;
-    background: var(--cream);
+    width: 7px; height: 7px;
+    background: var(--gold);
     border-radius: 50%;
     pointer-events: none;
     z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: transform 0.1s ease, background 0.2s;
+    transform: translate(-50%,-50%);
   }
   .cursor-ring {
     position: fixed; top: 0; left: 0;
-    width: 32px; height: 32px;
-    border: 1px solid rgba(219,203,172,0.5);
+    width: 30px; height: 30px;
+    border: 1px solid rgba(184,154,106,0.45);
     border-radius: 50%;
     pointer-events: none;
     z-index: 9998;
-    transform: translate(-50%, -50%);
-    transition: transform 0.18s ease, width 0.25s, height 0.25s, border-color 0.25s;
+    transform: translate(-50%,-50%);
+    transition: width 0.25s, height 0.25s, border-color 0.25s;
   }
   body:has(a:hover) .cursor-ring,
   body:has(button:hover) .cursor-ring {
-    width: 52px; height: 52px;
-    border-color: var(--cream);
+    width: 48px; height: 48px;
+    border-color: var(--gold);
   }
 }
-@media (hover: none) {
-  .cursor, .cursor-ring { display: none; }
-}
+@media (hover: none) { .cursor, .cursor-ring { display: none; } }
 
-/* ─── SCROLL REVEAL ───────────────────────────────────── */
-.rv {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.75s ease, transform 0.75s ease;
-}
+/* ─── SCROLL REVEAL ──────────────────────────── */
+.rv { opacity: 0; transform: translateY(28px); transition: opacity 0.75s ease, transform 0.75s ease; }
 .rv.visible { opacity: 1; transform: none; }
 .rv-delay-1 { transition-delay: 0.1s; }
-.rv-delay-2 { transition-delay: 0.2s; }
-.rv-delay-3 { transition-delay: 0.32s; }
-.rv-delay-4 { transition-delay: 0.44s; }
+.rv-delay-2 { transition-delay: 0.22s; }
+.rv-delay-3 { transition-delay: 0.34s; }
+.rv-delay-4 { transition-delay: 0.46s; }
 
-/* ─── NAV ─────────────────────────────────────────────── */
+/* ─── NAV ────────────────────────────────────── */
 .nav {
-  position: fixed; top: 0; left: 0; right: 0;
-  z-index: 100;
-  padding: 1.4rem clamp(1.5rem, 5vw, 4rem);
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 1.5rem clamp(1.5rem,5vw,4rem);
   display: flex; align-items: center; justify-content: space-between;
-  transition: background 0.4s ease, backdrop-filter 0.4s ease, padding 0.3s;
+  transition: background 0.4s, backdrop-filter 0.4s, padding 0.3s;
 }
 .nav.scrolled {
-  background: rgba(26, 24, 21, 0.88);
+  background: rgba(11,15,14,0.88);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   padding-top: 1rem; padding-bottom: 1rem;
 }
-.nav-logo img {
-  height: 28px;
-  width: auto;
-  filter: brightness(0) invert(1);
-  opacity: 0.92;
+.nav-wordmark {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--bone);
+  font-style: italic;
 }
-.nav-right {
-  display: flex; align-items: center; gap: 2.2rem;
-}
-.nav-links {
-  display: flex; gap: 2rem;
-  list-style: none;
-}
+.nav-right { display: flex; align-items: center; gap: 2.2rem; }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
 .nav-links a {
-  font-size: 0.72rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(219,203,172,0.75);
-  transition: color 0.25s;
+  font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(237,232,223,0.65); transition: color 0.25s;
 }
-.nav-links a:hover { color: var(--cream); }
+.nav-links a:hover { color: var(--bone); }
 .nav-cta {
-  display: inline-flex;
-  font-size: 0.68rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ink);
-  background: var(--cream);
-  padding: 0.6rem 1.4rem;
-  white-space: nowrap;
-  flex-shrink: 0;
-  transition: background 0.25s, color 0.25s;
+  display: inline-flex; font-size: 0.68rem; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--ink); background: var(--gold);
+  padding: 0.6rem 1.4rem; white-space: nowrap; flex-shrink: 0;
+  transition: background 0.25s;
 }
-.nav-cta:hover { background: var(--cream-lt); }
+.nav-cta:hover { background: var(--gold-lt); }
 .nav-toggle {
-  display: none;
-  background: none; border: none; outline: none;
-  -webkit-appearance: none; appearance: none;
-  cursor: pointer;
-  flex-direction: column; gap: 5px;
-  padding: 4px;
+  display: none; background: none; border: none; outline: none;
+  -webkit-appearance: none; appearance: none; cursor: pointer;
+  flex-direction: column; gap: 5px; padding: 4px;
 }
-.nav-toggle span {
-  display: block; width: 24px; height: 1px;
-  background: var(--cream);
-  transition: transform 0.3s, opacity 0.3s;
-}
+.nav-toggle span { display: block; width: 24px; height: 1px; background: var(--bone); transition: transform 0.3s, opacity 0.3s; }
 @media (max-width: 768px) {
   .nav-links, .nav-cta { display: none; }
   .nav-toggle { display: flex; }
   .nav.mobile-open .nav-links {
     display: flex; flex-direction: column;
-    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background: var(--ink);
-    align-items: center; justify-content: center;
-    gap: 2.5rem;
-    z-index: 99;
+    position: fixed; inset: 0; background: var(--ink);
+    align-items: center; justify-content: center; gap: 2.5rem; z-index: 99;
   }
-  .nav.mobile-open .nav-links a {
-    font-size: 1rem; letter-spacing: 0.2em;
-    color: var(--cream);
-  }
+  .nav.mobile-open .nav-links a { font-size: 1rem; color: var(--bone); }
 }
 
-/* ─── HERO ────────────────────────────────────────────── */
+/* ─── HERO ───────────────────────────────────── */
 .hero {
-  position: relative;
-  min-height: 100dvh;
+  position: relative; min-height: 100dvh;
   display: flex; align-items: flex-end;
-  padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 5vw, 4rem);
+  padding: clamp(4rem,10vw,8rem) clamp(1.5rem,5vw,4rem);
   overflow: hidden;
 }
-.hero-bg {
-  position: absolute; inset: 0;
-  z-index: 0;
-}
+.hero-bg { position: absolute; inset: 0; z-index: 0; }
 .hero-bg img {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  transform: scale(1.08) translateZ(0);
-  will-change: transform;
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: center top;
+  transform: scale(1.08) translateZ(0); will-change: transform;
   transition: transform 8s ease;
 }
 .hero-bg img.loaded { transform: scale(1.06) translateZ(0); }
 .hero-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(to top,
-    rgba(26,24,21,0.92) 0%,
-    rgba(26,24,21,0.55) 45%,
-    rgba(26,24,21,0.22) 100%);
+  background: linear-gradient(to top, rgba(11,15,14,0.94) 0%, rgba(11,15,14,0.5) 45%, rgba(11,15,14,0.18) 100%);
   z-index: 1;
 }
-.hero-content {
-  position: relative; z-index: 2;
-  max-width: 780px;
-}
-.hero-eyebrow {
-  font-size: 0.7rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--cream);
-  margin-bottom: 1.4rem;
-}
+.hero-content { position: relative; z-index: 2; max-width: 780px; }
+.hero-eyebrow { font-size: 0.7rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.4rem; }
 .hero-h1 {
-  font-family: var(--serif);
-  font-weight: 300;
-  font-size: clamp(2.8rem, 6vw, 5rem);
-  line-height: 1.12;
-  color: var(--ivory);
-  margin-bottom: 1.4rem;
+  font-family: var(--serif); font-weight: 300;
+  font-size: clamp(2.8rem,6vw,5rem); line-height: 1.1;
+  color: var(--bone); margin-bottom: 1.4rem;
 }
-.hero-h1 em {
-  font-style: italic;
-  color: var(--cream);
-}
+.hero-h1 em { font-style: italic; color: var(--gold-lt); }
 .hero-sub {
-  font-size: clamp(0.9rem, 1.5vw, 1.05rem);
-  font-weight: 300;
-  line-height: 1.7;
-  color: rgba(232,220,198,0.82);
-  max-width: 520px;
-  margin-bottom: 2.4rem;
+  font-size: clamp(0.88rem,1.5vw,1rem); font-weight: 300; line-height: 1.75;
+  color: rgba(237,232,223,0.75); max-width: 520px; margin-bottom: 2.4rem;
 }
-.hero-btns {
-  display: flex; gap: 1rem; flex-wrap: wrap;
-}
+.hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
 .btn-primary {
-  display: inline-flex;
-  font-family: var(--sans);
-  font-size: 0.7rem;
-  font-weight: 400;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ink);
-  background: var(--cream);
-  padding: 0.85rem 2rem;
-  white-space: nowrap;
-  flex-shrink: 0;
-  transition: background 0.25s, letter-spacing 0.25s;
+  display: inline-flex; font-family: var(--sans); font-size: 0.68rem;
+  font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--ink); background: var(--gold); padding: 0.85rem 2rem;
+  white-space: nowrap; flex-shrink: 0; transition: background 0.25s, letter-spacing 0.25s;
 }
-.btn-primary:hover { background: var(--cream-lt); letter-spacing: 0.2em; }
+.btn-primary:hover { background: var(--gold-lt); letter-spacing: 0.2em; }
 .btn-ghost {
-  display: inline-flex;
-  font-family: var(--sans);
-  font-size: 0.7rem;
-  font-weight: 400;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--cream);
-  border: 1px solid rgba(219,203,172,0.45);
-  padding: 0.85rem 2rem;
-  white-space: nowrap;
-  flex-shrink: 0;
-  transition: border-color 0.25s, color 0.25s;
+  display: inline-flex; font-family: var(--sans); font-size: 0.68rem;
+  font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--bone); border: 1px solid rgba(237,232,223,0.35); padding: 0.85rem 2rem;
+  white-space: nowrap; flex-shrink: 0; transition: border-color 0.25s, color 0.25s;
 }
-.btn-ghost:hover { border-color: var(--cream); color: var(--cream-lt); }
+.btn-ghost:hover { border-color: var(--bone); }
 
-/* ─── PRESS ───────────────────────────────────────────── */
+/* ─── PRESS ──────────────────────────────────── */
 .press {
-  background: var(--charcoal);
-  padding: clamp(3.5rem, 7vw, 5.5rem) clamp(1.5rem, 5vw, 4rem);
+  background: var(--forest);
+  padding: clamp(3.5rem,7vw,5.5rem) clamp(1.5rem,5vw,4rem);
 }
 .press-eyebrow {
-  text-align: center;
-  font-size: 0.65rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 2.8rem;
+  text-align: center; font-size: 0.65rem; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 2.8rem;
 }
 .press-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.2rem;
-  max-width: 1000px;
-  margin: 0 auto;
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 1.2rem; max-width: 1000px; margin: 0 auto;
 }
 .press-card {
-  position: relative;
-  background: #262422;
-  border: 1px solid rgba(219,203,172,0.1);
+  position: relative; background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(184,154,106,0.12);
   padding: 2.8rem 2rem 3rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 160px;
-  cursor: pointer;
-  transition: transform 0.35s cubic-bezier(0.22,1,0.36,1),
-              box-shadow 0.35s cubic-bezier(0.22,1,0.36,1),
-              border-color 0.35s;
-  overflow: hidden;
-  text-decoration: none;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 160px; cursor: pointer; overflow: hidden;
+  transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s cubic-bezier(0.22,1,0.36,1), border-color 0.35s;
 }
 .press-card:hover {
   transform: translateY(-6px) scale(1.025);
-  box-shadow: 0 18px 48px rgba(0,0,0,0.45), 0 0 0 1px rgba(219,203,172,0.22);
-  border-color: rgba(219,203,172,0.25);
+  box-shadow: 0 18px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(184,154,106,0.3);
+  border-color: rgba(184,154,106,0.3);
 }
 .press-logo {
-  max-width: 200px;
-  max-height: 60px;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  filter: brightness(0) invert(1);
-  opacity: 0.72;
+  max-width: 200px; max-height: 60px; width: auto; height: auto;
+  object-fit: contain; filter: brightness(0) invert(1); opacity: 0.65;
   transition: opacity 0.3s;
 }
 .press-card:hover .press-logo { opacity: 1; }
 .press-founder-thumb {
-  position: absolute;
-  bottom: 1rem; right: 1rem;
-  width: 44px; height: 44px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 1.5px solid rgba(219,203,172,0.35);
-  opacity: 0.72;
+  position: absolute; bottom: 1rem; right: 1rem;
+  width: 42px; height: 42px; border-radius: 50%; object-fit: cover;
+  border: 1.5px solid rgba(184,154,106,0.3); opacity: 0.65;
   transition: opacity 0.3s, border-color 0.3s;
 }
-.press-card:hover .press-founder-thumb {
-  opacity: 1;
-  border-color: rgba(219,203,172,0.7);
-}
+.press-card:hover .press-founder-thumb { opacity: 1; border-color: rgba(184,154,106,0.7); }
 .press-card-hint {
-  position: absolute;
-  bottom: 1.1rem; left: 50%; transform: translateX(-50%);
-  font-size: 0.58rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(219,203,172,0);
-  white-space: nowrap;
-  transition: color 0.3s;
+  position: absolute; bottom: 1.1rem; left: 50%; transform: translateX(-50%);
+  font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(184,154,106,0); white-space: nowrap; transition: color 0.3s;
 }
-.press-card:hover .press-card-hint { color: rgba(219,203,172,0.45); }
-@media (max-width: 640px) {
-  .press-grid { grid-template-columns: 1fr; max-width: 380px; }
-}
+.press-card:hover .press-card-hint { color: rgba(184,154,106,0.55); }
+@media (max-width: 640px) { .press-grid { grid-template-columns: 1fr; max-width: 380px; } }
 
-/* ─── MARQUEE ─────────────────────────────────────────── */
+/* ─── MARQUEE ────────────────────────────────── */
 .marquee-wrap {
-  background: var(--cream);
-  overflow: hidden;
-  padding: 1rem 0;
-  border-top: 1px solid rgba(26,24,21,0.1);
-  border-bottom: 1px solid rgba(26,24,21,0.1);
+  background: var(--gold); overflow: hidden; padding: 0.9rem 0;
 }
-.marquee-track {
-  display: flex;
-  width: max-content;
-  animation: marquee 28s linear infinite;
-}
+.marquee-track { display: flex; width: max-content; animation: marquee 30s linear infinite; }
 .marquee-track:hover { animation-play-state: paused; }
 .marquee-item {
-  display: flex; align-items: center; gap: 1.6rem;
-  padding: 0 1.6rem;
-  font-family: var(--serif);
-  font-size: 0.88rem;
-  font-style: italic;
-  letter-spacing: 0.04em;
-  color: var(--ink);
-  white-space: nowrap;
+  display: flex; align-items: center; gap: 1.4rem; padding: 0 1.4rem;
+  font-family: var(--serif); font-size: 0.85rem; font-style: italic;
+  color: var(--ink); white-space: nowrap;
 }
-.marquee-sep { opacity: 0.45; font-style: normal; }
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
+.marquee-sep { opacity: 0.4; font-style: normal; }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-/* ─── SERVICES ────────────────────────────────────────── */
+/* ─── SERVICES ───────────────────────────────── */
 .services {
   background: var(--ivory);
-  padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 5vw, 4rem);
+  padding: clamp(4rem,10vw,8rem) clamp(1.5rem,5vw,4rem);
 }
 .section-eyebrow {
-  font-size: 0.65rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 0.8rem;
+  font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 0.8rem;
 }
 .section-title {
-  font-family: var(--serif);
-  font-weight: 300;
-  font-size: clamp(2rem, 4vw, 3.2rem);
-  line-height: 1.15;
-  color: var(--ink);
-  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  font-family: var(--serif); font-weight: 300;
+  font-size: clamp(2rem,4vw,3.2rem); line-height: 1.18;
+  color: var(--ink); margin-bottom: clamp(2.5rem,5vw,4rem);
 }
-.section-title em { font-style: italic; color: var(--smoke); }
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.2rem;
-}
+.section-title em { font-style: italic; color: var(--sage); }
+.services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.2rem; }
 .svc-card {
-  position: relative;
-  overflow: hidden;
-  min-height: 440px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  background-size: cover;
-  background-position: center;
+  position: relative; overflow: hidden; min-height: 460px;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  background-size: cover; background-position: center;
 }
 .svc-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(to top,
-    rgba(26,24,21,0.92) 0%,
-    rgba(26,24,21,0.52) 55%,
-    rgba(26,24,21,0.22) 100%);
+  background: linear-gradient(to top, rgba(11,15,14,0.93) 0%, rgba(11,15,14,0.5) 55%, rgba(11,15,14,0.18) 100%);
   transition: background 0.35s;
 }
 .svc-card:hover .svc-overlay {
-  background: linear-gradient(to top,
-    rgba(26,24,21,0.96) 0%,
-    rgba(26,24,21,0.62) 55%,
-    rgba(26,24,21,0.3) 100%);
+  background: linear-gradient(to top, rgba(11,15,14,0.97) 0%, rgba(11,15,14,0.62) 55%, rgba(11,15,14,0.28) 100%);
 }
-.svc-body {
-  position: relative; z-index: 1;
-  padding: 2rem 1.8rem;
-}
-.svc-num {
-  font-size: 0.6rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--cream);
-  opacity: 0.6;
-  margin-bottom: 0.8rem;
-}
-.svc-name {
-  font-family: var(--serif);
-  font-size: 1.6rem;
-  font-weight: 400;
-  font-style: italic;
-  color: var(--ivory);
-  margin-bottom: 0.8rem;
-  line-height: 1.2;
-}
+.svc-body { position: relative; z-index: 1; padding: 2rem 1.8rem; }
+.svc-num { font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); opacity: 0.7; margin-bottom: 0.75rem; }
+.svc-name { font-family: var(--serif); font-size: 1.6rem; font-weight: 400; font-style: italic; color: var(--bone); margin-bottom: 0.8rem; line-height: 1.2; }
 .svc-desc {
-  font-size: 0.82rem;
-  font-weight: 300;
-  line-height: 1.75;
-  color: rgba(219,203,172,0.82);
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease, opacity 0.35s;
-  opacity: 0;
+  font-size: 0.82rem; font-weight: 300; line-height: 1.75; color: rgba(237,232,223,0.78);
+  max-height: 0; overflow: hidden; transition: max-height 0.4s ease, opacity 0.35s; opacity: 0;
 }
-.svc-card:hover .svc-desc { max-height: 140px; opacity: 1; }
+.svc-card:hover .svc-desc { max-height: 160px; opacity: 1; }
 @media (max-width: 768px) {
   .services-grid { grid-template-columns: 1fr; }
-  .svc-desc { max-height: 140px; opacity: 1; }
+  .svc-desc { max-height: 160px; opacity: 1; }
 }
 
-/* ─── MEET ────────────────────────────────────────────── */
+/* ─── MEET ───────────────────────────────────── */
 .meet {
-  background: var(--charcoal);
-  padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 5vw, 4rem);
+  background: var(--ink);
+  padding: clamp(4rem,10vw,8rem) clamp(1.5rem,5vw,4rem);
 }
 .meet-inner {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(3rem, 6vw, 6rem);
-  align-items: center;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-.meet-img-wrap {
-  position: relative;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: clamp(3rem,6vw,6rem); align-items: center;
+  max-width: 1100px; margin: 0 auto;
 }
 .meet-img {
-  width: 100%;
-  aspect-ratio: 3/4;
-  object-fit: cover;
+  width: 100%; aspect-ratio: 3/4; object-fit: cover;
   object-position: center top;
-}
-.meet-img-accent {
-  position: absolute;
-  bottom: -1.5rem; right: -1.5rem;
-  width: 45%;
-  aspect-ratio: 1;
-  object-fit: cover;
-  object-position: center top;
-  border: 3px solid var(--charcoal);
 }
 .meet-copy .section-eyebrow { color: var(--muted); }
-.meet-copy .section-title { color: var(--ivory); }
+.meet-copy .section-title { color: var(--bone); }
 .meet-quote {
-  font-family: var(--serif);
-  font-size: clamp(1.2rem, 2.2vw, 1.6rem);
-  font-style: italic;
-  font-weight: 300;
-  color: var(--cream);
-  line-height: 1.55;
-  margin-bottom: 1.8rem;
-  padding-left: 1.2rem;
-  border-left: 2px solid rgba(219,203,172,0.4);
+  font-family: var(--serif); font-size: clamp(1.1rem,2vw,1.5rem);
+  font-style: italic; font-weight: 300; color: var(--gold-lt);
+  line-height: 1.6; margin-bottom: 1.8rem;
+  padding-left: 1.2rem; border-left: 2px solid rgba(184,154,106,0.4);
 }
 .meet-bio {
-  font-size: 0.9rem;
-  font-weight: 300;
-  line-height: 1.85;
-  color: rgba(219,203,172,0.72);
-  margin-bottom: 2rem;
+  font-size: 0.88rem; font-weight: 300; line-height: 1.85;
+  color: rgba(237,232,223,0.65); margin-bottom: 1.4rem;
 }
-@media (max-width: 768px) {
-  .meet-inner { grid-template-columns: 1fr; }
-  .meet-img-accent { display: none; }
-}
+@media (max-width: 768px) { .meet-inner { grid-template-columns: 1fr; } }
 
-/* ─── TESTIMONIALS ────────────────────────────────────── */
+/* ─── TESTIMONIALS ───────────────────────────── */
 .testimonials {
-  background: var(--ivory);
-  padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 5vw, 4rem);
+  background: var(--forest);
+  padding: clamp(4rem,10vw,8rem) clamp(1.5rem,5vw,4rem);
 }
-.testi-inner { max-width: 800px; margin: 0 auto; }
-.accordion-item {
-  border-bottom: 1px solid rgba(46,46,46,0.14);
+.testi-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 1.4rem; max-width: 1100px; margin: 3rem auto 0;
 }
-.accordion-header {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 1.4rem 0;
-  cursor: pointer;
-  gap: 1rem;
+.testi-card {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(184,154,106,0.12);
+  padding: 2.2rem; cursor: pointer; position: relative;
+  transition: transform 0.35s cubic-bezier(0.22,1,0.36,1),
+              box-shadow 0.35s cubic-bezier(0.22,1,0.36,1),
+              border-color 0.35s;
+  display: flex; flex-direction: column; gap: 1.4rem;
 }
-.accordion-name {
-  font-size: 0.72rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--smoke);
+.testi-card:hover {
+  transform: translateY(-5px) scale(1.018);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4), 0 0 0 1px rgba(184,154,106,0.25);
+  border-color: rgba(184,154,106,0.25);
 }
-.accordion-snippet {
-  font-family: var(--serif);
-  font-size: 1rem;
-  font-style: italic;
-  color: var(--muted);
-  flex: 1;
-  padding-left: 1.2rem;
+.testi-face {
+  width: 56px; height: 56px; border-radius: 50%; object-fit: cover;
+  border: 2px solid rgba(184,154,106,0.35);
+}
+.testi-snippet {
+  font-family: var(--serif); font-size: 1.05rem; font-style: italic;
+  font-weight: 300; color: var(--bone); line-height: 1.6;
+  display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical;
   overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
 }
-.accordion-icon {
-  font-size: 1.2rem;
-  color: var(--muted);
-  transition: transform 0.3s;
-  flex-shrink: 0;
+.testi-name {
+  font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gold); margin-top: auto;
 }
-.accordion-item.open .accordion-icon { transform: rotate(45deg); }
-.accordion-body {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1);
+.testi-expand {
+  font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(184,154,106,0.5); margin-top: 0.5rem;
+  transition: color 0.25s;
 }
-.accordion-item.open .accordion-body { max-height: 400px; }
-.accordion-quote {
-  font-family: var(--serif);
-  font-size: clamp(1.05rem, 2vw, 1.3rem);
-  font-style: italic;
-  font-weight: 300;
-  line-height: 1.65;
-  color: var(--ink);
-  padding-bottom: 2rem;
-  padding-left: 0;
-}
+.testi-card:hover .testi-expand { color: var(--gold); }
+@media (max-width: 768px) { .testi-grid { grid-template-columns: 1fr; } }
 
-/* ─── HOW TO BEGIN ────────────────────────────────────── */
+/* ─── TESTIMONIAL LIGHTBOX ───────────────────── */
+.testi-lightbox {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(11,15,14,0); pointer-events: none;
+  display: flex; align-items: center; justify-content: center;
+  padding: 2rem;
+  transition: background 0.35s;
+}
+.testi-lightbox.open { background: rgba(11,15,14,0.88); pointer-events: all; }
+.testi-lb-inner {
+  background: var(--forest); border: 1px solid rgba(184,154,106,0.2);
+  max-width: 620px; width: 100%; padding: 3rem;
+  opacity: 0; transform: translateY(20px) scale(0.97);
+  transition: opacity 0.35s, transform 0.35s;
+  position: relative;
+}
+.testi-lightbox.open .testi-lb-inner { opacity: 1; transform: none; }
+.testi-lb-header { display: flex; align-items: center; gap: 1.2rem; margin-bottom: 1.8rem; }
+.testi-lb-face {
+  width: 64px; height: 64px; border-radius: 50%; object-fit: cover;
+  border: 2px solid rgba(184,154,106,0.4); flex-shrink: 0;
+}
+.testi-lb-name { font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); }
+.testi-lb-quote {
+  font-family: var(--serif); font-size: clamp(1.1rem,2vw,1.35rem);
+  font-style: italic; font-weight: 300; line-height: 1.7;
+  color: var(--bone);
+}
+.testi-lb-close {
+  position: absolute; top: 1.2rem; right: 1.4rem;
+  background: none; border: none; cursor: pointer; color: var(--muted);
+  font-size: 1.2rem; line-height: 1; transition: color 0.2s;
+  -webkit-appearance: none; appearance: none; outline: none;
+}
+.testi-lb-close:hover { color: var(--bone); }
+
+/* ─── HOW TO BEGIN ───────────────────────────── */
 .begin {
-  background: var(--charcoal);
-  padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 5vw, 4rem);
+  background: var(--ink);
+  padding: clamp(4rem,10vw,8rem) clamp(1.5rem,5vw,4rem);
 }
 .begin-inner { max-width: 1000px; margin: 0 auto; }
 .begin-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2.5rem;
-  margin-top: 3.5rem;
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 2.5rem; margin-top: 3.5rem;
 }
-.begin-step { }
+.begin-step { position: relative; }
 .begin-num {
-  font-family: var(--serif);
-  font-size: 3.5rem;
-  font-weight: 300;
-  color: rgba(219,203,172,0.2);
-  line-height: 1;
-  margin-bottom: 1rem;
+  font-family: var(--serif); font-size: 3.8rem; font-weight: 300;
+  line-height: 1; margin-bottom: 1rem;
+  color: rgba(184,154,106,0.18);
+  transition: color 0.5s;
 }
+.begin-step.lit .begin-num { color: rgba(184,154,106,0.65); }
 .begin-title {
-  font-family: var(--serif);
-  font-size: 1.25rem;
-  font-style: italic;
-  color: var(--cream-lt);
-  margin-bottom: 0.8rem;
+  font-family: var(--serif); font-size: 1.2rem; font-style: italic;
+  color: var(--bone); margin-bottom: 0.8rem;
+  opacity: 0; transform: translateY(10px);
+  transition: opacity 0.5s, transform 0.5s;
 }
+.begin-step.lit .begin-title { opacity: 1; transform: none; }
 .begin-desc {
-  font-size: 0.85rem;
-  font-weight: 300;
-  line-height: 1.8;
-  color: rgba(219,203,172,0.65);
+  font-size: 0.83rem; font-weight: 300; line-height: 1.82;
+  color: rgba(237,232,223,0);
+  transition: color 0.5s;
 }
-.begin-cta {
-  margin-top: 3.5rem;
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
+.begin-step.lit .begin-desc { color: rgba(237,232,223,0.6); }
+.begin-cta { margin-top: 3.5rem; }
+/* scan beam */
+.begin-scan {
+  position: absolute; left: 0; right: 0; top: 0;
+  height: 2px;
+  background: linear-gradient(to right, transparent 0%, rgba(184,154,106,0.6) 40%, rgba(212,185,138,0.9) 50%, rgba(184,154,106,0.6) 60%, transparent 100%);
+  pointer-events: none; opacity: 0;
 }
-@media (max-width: 640px) {
-  .begin-grid { grid-template-columns: 1fr; gap: 2rem; }
-}
+@media (max-width: 640px) { .begin-grid { grid-template-columns: 1fr; gap: 2rem; } }
 
-/* ─── CTA BAND ────────────────────────────────────────── */
+/* ─── CTA BAND ───────────────────────────────── */
 .cta-band {
-  background: var(--cream);
-  padding: clamp(4rem, 8vw, 6rem) clamp(1.5rem, 5vw, 4rem);
+  background: var(--gold); padding: clamp(4rem,8vw,6rem) clamp(1.5rem,5vw,4rem);
   text-align: center;
 }
 .cta-band-title {
-  font-family: var(--serif);
-  font-weight: 300;
-  font-size: clamp(1.8rem, 4vw, 3rem);
-  color: var(--ink);
-  line-height: 1.2;
-  margin-bottom: 0.6rem;
+  font-family: var(--serif); font-weight: 300;
+  font-size: clamp(1.8rem,4vw,3rem); color: var(--ink);
+  line-height: 1.2; margin-bottom: 0.5rem;
 }
 .cta-band-title em { font-style: italic; }
 .cta-band-sub {
-  font-size: 0.88rem;
-  font-weight: 300;
-  color: var(--smoke);
-  margin-bottom: 2.2rem;
-  line-height: 1.7;
+  font-size: 0.88rem; font-weight: 300; color: rgba(11,15,14,0.65);
+  margin-bottom: 2.2rem; line-height: 1.7;
 }
 .btn-dark {
-  display: inline-flex;
-  font-family: var(--sans);
-  font-size: 0.7rem;
-  font-weight: 400;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--cream-lt);
-  background: var(--ink);
-  padding: 0.9rem 2.2rem;
-  white-space: nowrap;
-  flex-shrink: 0;
-  transition: background 0.25s, letter-spacing 0.25s;
+  display: inline-flex; font-family: var(--sans); font-size: 0.68rem;
+  font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--bone); background: var(--ink); padding: 0.9rem 2.2rem;
+  white-space: nowrap; flex-shrink: 0; transition: background 0.25s, letter-spacing 0.25s;
 }
-.btn-dark:hover { background: var(--charcoal); letter-spacing: 0.2em; }
+.btn-dark:hover { background: var(--forest); letter-spacing: 0.2em; }
 
-/* ─── FOOTER ──────────────────────────────────────────── */
+/* ─── FOOTER ─────────────────────────────────── */
 footer {
-  background: var(--ink);
-  border-radius: 3rem 3rem 0 0;
-  padding: clamp(3rem, 6vw, 4.5rem) clamp(1.5rem, 5vw, 4rem) 2rem;
+  background: var(--ink); border-radius: 3rem 3rem 0 0;
+  padding: clamp(3rem,6vw,4.5rem) clamp(1.5rem,5vw,4rem) 2rem;
 }
-.footer-inner {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: 3rem;
-  margin-bottom: 3rem;
+.footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+.footer-wordmark {
+  font-family: var(--serif); font-size: 1.2rem; font-style: italic;
+  color: rgba(237,232,223,0.7); letter-spacing: 0.06em; margin-bottom: 0.8rem;
 }
-.footer-logo img {
-  height: 22px;
-  width: auto;
-  filter: brightness(0) invert(1);
-  opacity: 0.7;
-  margin-bottom: 0.8rem;
-}
-.footer-tagline {
-  font-family: var(--serif);
-  font-size: 0.95rem;
-  font-style: italic;
-  color: rgba(219,203,172,0.55);
-  line-height: 1.5;
-}
-.footer-col-title {
-  font-size: 0.65rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 1.2rem;
-}
+.footer-tagline { font-family: var(--serif); font-size: 0.9rem; font-style: italic; color: rgba(184,154,106,0.5); line-height: 1.55; }
+.footer-col-title { font-size: 0.63rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.2rem; }
 .footer-links { list-style: none; }
 .footer-links li + li { margin-top: 0.65rem; }
-.footer-links a {
-  font-size: 0.82rem;
-  font-weight: 300;
-  color: rgba(219,203,172,0.5);
-  transition: color 0.2s;
-}
-.footer-links a:hover { color: var(--cream); }
-.footer-bottom {
-  border-top: 1px solid rgba(219,203,172,0.08);
-  padding-top: 1.5rem;
-  display: flex; justify-content: space-between; align-items: center;
-  flex-wrap: wrap; gap: 0.5rem;
-}
-.footer-copy {
-  font-size: 0.72rem;
-  color: rgba(219,203,172,0.28);
-  letter-spacing: 0.05em;
-}
-.footer-ig {
-  font-size: 0.68rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(219,203,172,0.4);
-  transition: color 0.2s;
-}
-.footer-ig:hover { color: var(--cream); }
+.footer-links a { font-size: 0.82rem; font-weight: 300; color: rgba(237,232,223,0.45); transition: color 0.2s; }
+.footer-links a:hover { color: var(--bone); }
+.footer-bottom { border-top: 1px solid rgba(184,154,106,0.08); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+.footer-copy { font-size: 0.7rem; color: rgba(237,232,223,0.22); letter-spacing: 0.05em; }
+.footer-ig { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(237,232,223,0.35); transition: color 0.2s; }
+.footer-ig:hover { color: var(--bone); }
 @media (max-width: 640px) {
   .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
   .footer-bottom { flex-direction: column; align-items: flex-start; }
@@ -720,15 +481,12 @@ footer {
 </head>
 <body>
 
-<!-- CURSOR -->
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
 <!-- NAV -->
 <nav class="nav" id="nav">
-  <a href="#" class="nav-logo">
-    <img src="https://thisiswinterjane.com/_assets/media/a03ca0d424ef0b053cee7b64ab4cfe10.png" alt="Winter Jane">
-  </a>
+  <a href="#" class="nav-wordmark">Winter Jane</a>
   <div class="nav-right">
     <ul class="nav-links" id="navLinks">
       <li><a href="#about">About</a></li>
@@ -744,24 +502,16 @@ footer {
 </nav>
 
 <!-- HERO -->
-<section class="hero" id="hero">
+<section class="hero">
   <div class="hero-bg">
-    <img
-      src="https://thisiswinterjane.com/_assets/media/543f3c78d3a913eaa7deb8e61cdcd688.jpg"
-      alt="Winter Jane"
-      id="heroImg"
-      fetchpriority="high"
-    >
+    <img src="https://thisiswinterjane.com/_assets/media/543f3c78d3a913eaa7deb8e61cdcd688.jpg"
+         alt="Winter Jane" id="heroImg" fetchpriority="high">
   </div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <p class="hero-eyebrow rv">Shamanic Life Coach</p>
-    <h1 class="hero-h1 rv rv-delay-1">
-      Reclaim the woman<br><em>underneath</em> the survival strategy.
-    </h1>
-    <p class="hero-sub rv rv-delay-2">
-      Wild Feminine Recode — private support for the woman ready to return to her power, softness, truth and self-trust.
-    </p>
+    <h1 class="hero-h1 rv rv-delay-1">Reclaim yourself<br>with <em>Winter.</em></h1>
+    <p class="hero-sub rv rv-delay-2">Wild Feminine Recode — private support for the woman ready to return to her power, softness, truth and self-trust.</p>
     <div class="hero-btns rv rv-delay-3">
       <a href="https://thisiswinterjane.com/" target="_blank" class="btn-primary">Fill Out the Intake Form</a>
       <a href="#services" class="btn-ghost">Explore the Work</a>
@@ -770,58 +520,29 @@ footer {
 </section>
 
 <!-- PRESS -->
-<section class="press" id="press">
+<section class="press">
   <p class="press-eyebrow rv">As Seen On</p>
   <div class="press-grid">
-
-    <!-- Card 1 — with founder thumb -->
     <a href="#" class="press-card rv rv-delay-1">
-      <img
-        src="https://thisiswinterjane.com/_assets/media/ee190fe7fbdfb2c7b1b92626e834d97e.png"
-        alt="Press feature"
-        class="press-logo"
-      >
-      <img
-        src="https://thisiswinterjane.com/_assets/media/21904333d6b90f0d7368717b2c57337f.png"
-        alt="Winter Jane"
-        class="press-founder-thumb"
-      >
+      <img src="https://thisiswinterjane.com/_assets/media/ee190fe7fbdfb2c7b1b92626e834d97e.png" alt="Press feature" class="press-logo">
+      <img src="https://thisiswinterjane.com/_assets/media/21904333d6b90f0d7368717b2c57337f.png" alt="Winter Jane" class="press-founder-thumb">
       <span class="press-card-hint">Read Feature →</span>
     </a>
-
-    <!-- Card 2 — no thumb, centered solo -->
     <a href="#" class="press-card rv rv-delay-2">
-      <img
-        src="https://thisiswinterjane.com/_assets/media/5995fc87759a912e684a71243a90f161.png"
-        alt="Press feature"
-        class="press-logo"
-      >
+      <img src="https://thisiswinterjane.com/_assets/media/5995fc87759a912e684a71243a90f161.png" alt="Press feature" class="press-logo">
       <span class="press-card-hint">Read Feature →</span>
     </a>
-
-    <!-- Card 3 — with founder thumb -->
     <a href="#" class="press-card rv rv-delay-3">
-      <img
-        src="https://thisiswinterjane.com/_assets/media/8ce538b989c2617930a86dcab6dc9875.png"
-        alt="Press feature"
-        class="press-logo"
-      >
-      <img
-        src="https://thisiswinterjane.com/_assets/media/21904333d6b90f0d7368717b2c57337f.png"
-        alt="Winter Jane"
-        class="press-founder-thumb"
-      >
+      <img src="https://thisiswinterjane.com/_assets/media/8ce538b989c2617930a86dcab6dc9875.png" alt="Press feature" class="press-logo">
+      <img src="https://thisiswinterjane.com/_assets/media/21904333d6b90f0d7368717b2c57337f.png" alt="Winter Jane" class="press-founder-thumb">
       <span class="press-card-hint">Read Feature →</span>
     </a>
-
   </div>
 </section>
 
 <!-- MARQUEE -->
 <div class="marquee-wrap">
-  <div class="marquee-track" id="marqueeTrack">
-    <!-- filled by JS -->
-  </div>
+  <div class="marquee-track" id="marqueeTrack"></div>
 </div>
 
 <!-- SERVICES -->
@@ -831,8 +552,7 @@ footer {
     <h2 class="section-title">My work lives at the intersection of power, softness, body truth, relationships, emotional freedom and <em>feminine reclamation.</em></h2>
   </div>
   <div class="services-grid">
-
-    <div class="svc-card rv rv-delay-1" style="background-image:url('https://images.unsplash.com/photo-1461532257246-777de18cd58b?q=80&w=800&auto=format&fit=crop')">
+    <div class="svc-card rv rv-delay-1" style="background-image:url('https://images.unsplash.com/photo-1534630103086-5b1c106f74e0?q=80&w=1331&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')">
       <div class="svc-overlay"></div>
       <div class="svc-body">
         <p class="svc-num">01 · Relationships</p>
@@ -840,8 +560,7 @@ footer {
         <p class="svc-desc">For the woman learning to love, receive, grieve, desire, and choose without leaving herself. We work with attachment, safe love, sexuality, romantic grief, self-trust, and the patterns that taught you to perform connection.</p>
       </div>
     </div>
-
-    <div class="svc-card rv rv-delay-2" style="background-image:url('https://images.unsplash.com/photo-1585860095562-08f80ef43d43?q=80&w=800&auto=format&fit=crop')">
+    <div class="svc-card rv rv-delay-2" style="background-image:url('https://images.unsplash.com/photo-1608493830924-ec843d9c98c6?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')">
       <div class="svc-overlay"></div>
       <div class="svc-body">
         <p class="svc-num">02 · Mental Wellbeing</p>
@@ -849,8 +568,7 @@ footer {
         <p class="svc-desc">For the woman whose body is telling the truth before her mind can explain it. We work with resentment, family guilt, emotional over-responsibility, avoidance, urgency and the need for a new inner architecture.</p>
       </div>
     </div>
-
-    <div class="svc-card rv rv-delay-3" style="background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80')">
+    <div class="svc-card rv rv-delay-3" style="background-image:url('https://images.unsplash.com/photo-1620809975674-10b8ff5f8e58?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')">
       <div class="svc-overlay"></div>
       <div class="svc-body">
         <p class="svc-num">03 · Career</p>
@@ -858,107 +576,105 @@ footer {
         <p class="svc-desc">For the woman who looks successful, but feels exhausted by the identity that got her here. We work with burnout, support resistance, over-performing, visibility fatigue, and the body's refusal to keep building from pressure.</p>
       </div>
     </div>
-
   </div>
 </section>
 
 <!-- MEET -->
 <section class="meet" id="about">
   <div class="meet-inner">
-    <div class="meet-img-wrap rv">
-      <img
-        class="meet-img"
-        src="https://thisiswinterjane.com/_assets/media/82a87e2d6c52c9005de75338c1b4a863.jpg"
-        alt="Winter Jane"
-      >
-      <img
-        class="meet-img-accent"
-        src="https://thisiswinterjane.com/_assets/media/67b616f2bd7752e7b671129c5228d458.jpg"
-        alt="Winter Jane"
-      >
+    <div class="rv">
+      <img class="meet-img" src="about-photo.jpg" alt="Winter Jane">
     </div>
     <div class="meet-copy rv rv-delay-2">
       <p class="section-eyebrow">Hello, I'm</p>
-      <h2 class="section-title" style="color:var(--ivory)"><em>Winter Jane</em></h2>
+      <h2 class="section-title"><em>Winter Jane</em></h2>
       <blockquote class="meet-quote">
         "This is not about becoming someone new. It is about getting you back to the woman underneath the survival strategy."
       </blockquote>
-      <p class="meet-bio">
-        I help women get free from the patterns, roles and invisible agreements that keep them over-functioning, self-abandoning, performing strength and surviving inside lives they've outgrown. My work lives at the intersection of power, softness, body truth, relationships, emotional freedom and feminine reclamation.
-      </p>
-      <p class="meet-bio">
-        With 20+ years of experience in the spiritual wellness world I've helped thousands of women on the journey of reclaiming their authenticity and hearts.
-      </p>
-      <a href="https://thisiswinterjane.com/" target="_blank" class="btn-primary" style="background:var(--cream);color:var(--ink);">Work With Winter</a>
+      <p class="meet-bio">I help women get free from the patterns, roles and invisible agreements that keep them over-functioning, self-abandoning, performing strength and surviving inside lives they've outgrown. My work lives at the intersection of power, softness, body truth, relationships, emotional freedom and feminine reclamation.</p>
+      <p class="meet-bio">With 20+ years of experience in the spiritual wellness world I've helped thousands of women on the journey of reclaiming their authenticity and hearts.</p>
+      <a href="https://thisiswinterjane.com/" target="_blank" class="btn-primary" style="margin-top:0.5rem;">Work With Winter</a>
     </div>
   </div>
 </section>
 
 <!-- TESTIMONIALS -->
 <section class="testimonials" id="testimonials">
-  <div class="testi-inner">
+  <div style="max-width:1100px;margin:0 auto;">
     <div class="rv">
-      <p class="section-eyebrow">Client Love</p>
-      <h2 class="section-title">Words from the <em>women who've done the work.</em></h2>
+      <p class="section-eyebrow" style="color:var(--muted)">Client Love</p>
+      <h2 class="section-title" style="color:var(--bone)">Words from the women who've <em>done the work.</em></h2>
     </div>
-    <div class="accordion rv rv-delay-1" id="accordion">
+    <div class="testi-grid">
 
-      <div class="accordion-item open">
-        <div class="accordion-header">
-          <span class="accordion-name">Elizabeth C.</span>
-          <span class="accordion-snippet">"I know my soul has grown leaps and bounds…"</span>
-          <span class="accordion-icon">+</span>
-        </div>
-        <div class="accordion-body">
-          <p class="accordion-quote">"I know my soul has grown leaps and bounds because of you… The way I was guided through with your intuitive skills was amazing and an experience I'll never forget — just feeling held and supported the entire way through was AMAZING. Such a gift!!! I love you so much!!!"</p>
-        </div>
+      <div class="testi-card rv rv-delay-1"
+           data-face="https://thisiswinterjane.com/_assets/media/2b447c2d22eb359131e0049ec70bd650.jpg"
+           data-name="Elizabeth C."
+           data-quote=""I know my soul has grown leaps and bounds because of you… The way I was guided through with your intuitive skills was amazing and an experience I'll never forget — just feeling held and supported the entire way through was AMAZING. Such a gift!!! I love you so much!!!"">
+        <img class="testi-face" src="https://thisiswinterjane.com/_assets/media/2b447c2d22eb359131e0049ec70bd650.jpg" alt="Elizabeth C.">
+        <p class="testi-snippet">"I know my soul has grown leaps and bounds because of you… The way I was guided through with your intuitive skills was amazing and an experience I'll never forget — just feeling held and supported the entire way through was AMAZING."</p>
+        <p class="testi-name">Elizabeth C.</p>
+        <p class="testi-expand">Read full testimonial →</p>
       </div>
 
-      <div class="accordion-item">
-        <div class="accordion-header">
-          <span class="accordion-name">Kristina Z.</span>
-          <span class="accordion-snippet">"Winter is a true manifestor and visionary…"</span>
-          <span class="accordion-icon">+</span>
-        </div>
-        <div class="accordion-body">
-          <p class="accordion-quote">"Winter is a true manifestor and visionary. Not only do I look forward to our calls because I know I'm going to leave feeling focused and reenergized, but completely ready to tackle my next steps in my own business. Highly recommend 💜"</p>
-        </div>
+      <div class="testi-card rv rv-delay-2"
+           data-face="https://thisiswinterjane.com/_assets/media/2ea9e52d97a1416d9ac72e9eca87d881.jpg"
+           data-name="Kristina Z."
+           data-quote=""Winter is a true manifestor and visionary. Not only do I look forward to our calls because I know I'm going to leave feeling focused and reenergized, but completely ready to tackle my next steps in my own business. Highly recommend 💜"">
+        <img class="testi-face" src="https://thisiswinterjane.com/_assets/media/2ea9e52d97a1416d9ac72e9eca87d881.jpg" alt="Kristina Z.">
+        <p class="testi-snippet">"Winter is a true manifestor and visionary. Not only do I look forward to our calls because I know I'm going to leave feeling focused and reenergized, but completely ready to tackle my next steps in my own business."</p>
+        <p class="testi-name">Kristina Z.</p>
+        <p class="testi-expand">Read full testimonial →</p>
       </div>
 
-      <div class="accordion-item">
-        <div class="accordion-header">
-          <span class="accordion-name">Nelle G.</span>
-          <span class="accordion-snippet">"I really feel like I've skipped a whole bunch of timelines…"</span>
-          <span class="accordion-icon">+</span>
-        </div>
-        <div class="accordion-body">
-          <p class="accordion-quote">"I really feel like I've skipped a whole bunch of timelines to be where I am now, incredible clients, the $ I'd dreamed of and I'm so much happier in my family life. 'Gratitude' does not even go close to how I feel about her energetic upgrades. Thank you so much lady… you are one of a kind 🙏🏼"</p>
-        </div>
+      <div class="testi-card rv rv-delay-3"
+           data-face="https://thisiswinterjane.com/_assets/media/a819c955a1c1ad2d812bb8e7cb77723d.png"
+           data-name="Nelle G."
+           data-quote=""I really feel like I've skipped a whole bunch of timelines to be where I am now, incredible clients, the $ I'd dreamed of and I'm so much happier in my family life. 'Gratitude' does not even go close to how I feel about her energetic upgrades. Thank you so much lady… you are one of a kind 🙏🏼"">
+        <img class="testi-face" src="https://thisiswinterjane.com/_assets/media/a819c955a1c1ad2d812bb8e7cb77723d.png" alt="Nelle G.">
+        <p class="testi-snippet">"I really feel like I've skipped a whole bunch of timelines to be where I am now, incredible clients, the $ I'd dreamed of and I'm so much happier in my family life."</p>
+        <p class="testi-name">Nelle G.</p>
+        <p class="testi-expand">Read full testimonial →</p>
       </div>
 
     </div>
   </div>
 </section>
 
+<!-- TESTIMONIAL LIGHTBOX -->
+<div class="testi-lightbox" id="testiLightbox">
+  <div class="testi-lb-inner" id="testiLbInner">
+    <button class="testi-lb-close" id="testiLbClose">✕</button>
+    <div class="testi-lb-header">
+      <img class="testi-lb-face" id="testiLbFace" src="" alt="">
+      <p class="testi-lb-name" id="testiLbName"></p>
+    </div>
+    <p class="testi-lb-quote" id="testiLbQuote"></p>
+  </div>
+</div>
+
 <!-- HOW TO BEGIN -->
 <section class="begin" id="begin">
   <div class="begin-inner">
     <div class="rv">
       <p class="section-eyebrow" style="color:var(--muted)">What's My Next Step?</p>
-      <h2 class="section-title" style="color:var(--ivory)">Beginning is<br><em>simpler than you think.</em></h2>
+      <h2 class="section-title" style="color:var(--bone)">Beginning is <em>simpler than you think.</em></h2>
     </div>
-    <div class="begin-grid">
-      <div class="begin-step rv rv-delay-1">
+    <div class="begin-grid" id="beginGrid">
+      <div class="begin-step" id="beginStep1">
+        <div class="begin-scan" id="beginScan1"></div>
         <p class="begin-num">01</p>
         <h3 class="begin-title">Fill Out the Intake Form</h3>
         <p class="begin-desc">The intake form gives you the space to put everything that's been weighing you down; I want you to go all in on the areas that have been keeping you stuck, frustrated and unclear. It lays the foundation for the introductory Clarity Call.</p>
       </div>
-      <div class="begin-step rv rv-delay-2">
+      <div class="begin-step" id="beginStep2">
+        <div class="begin-scan" id="beginScan2"></div>
         <p class="begin-num">02</p>
         <h3 class="begin-title">Book Your Clarity Call</h3>
         <p class="begin-desc">When you finish the intake form you'll see a hyperlink at the end to book your introductory Clarity Call, a 60-minute deep dive with me to get to the root of one of the areas you've shared in your form.</p>
       </div>
-      <div class="begin-step rv rv-delay-3">
+      <div class="begin-step" id="beginStep3">
+        <div class="begin-scan" id="beginScan3"></div>
         <p class="begin-num">03</p>
         <h3 class="begin-title">Receive Your Next Steps</h3>
         <p class="begin-desc">At the end of your call you'll receive next steps in the form of aligned actions, a healing tool and any helpful details you might need for continuing your journey, if you feel inclined to expand upon your transformation.</p>
@@ -981,9 +697,7 @@ footer {
 <footer>
   <div class="footer-inner">
     <div>
-      <div class="footer-logo">
-        <img src="https://thisiswinterjane.com/_assets/media/a03ca0d424ef0b053cee7b64ab4cfe10.png" alt="Winter Jane">
-      </div>
+      <p class="footer-wordmark">Winter Jane</p>
       <p class="footer-tagline">Sacred support for the woman<br>ready to return to herself.</p>
     </div>
     <div>
@@ -1010,74 +724,120 @@ footer {
 </footer>
 
 <script>
-// ── Cursor ────────────────────────────────────────────────
+// ── Cursor ──────────────────────────────────────────────────
 if (!window.matchMedia('(hover: none)').matches) {
   const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
+  const ring   = document.getElementById('cursorRing');
   let mx = -100, my = -100, rx = -100, ry = -100;
   window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-  function animateCursor() {
-    rx += (mx - rx) * 0.12;
-    ry += (my - ry) * 0.12;
-    cursor.style.left = mx + 'px';
-    cursor.style.top  = my + 'px';
-    ring.style.left   = rx + 'px';
-    ring.style.top    = ry + 'px';
-    requestAnimationFrame(animateCursor);
-  }
-  animateCursor();
+  (function tick() {
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    ring.style.left   = rx + 'px'; ring.style.top   = ry + 'px';
+    requestAnimationFrame(tick);
+  })();
 }
 
-// ── Nav scroll ────────────────────────────────────────────
+// ── Nav ─────────────────────────────────────────────────────
 const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 40);
-}, { passive: true });
-
-// ── Nav mobile ────────────────────────────────────────────
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40), { passive: true });
 const toggle = document.getElementById('navToggle');
-const navLinks = document.getElementById('navLinks');
-toggle.addEventListener('click', () => {
-  nav.classList.toggle('mobile-open');
-});
-navLinks.querySelectorAll('a').forEach(a => {
-  a.addEventListener('click', () => nav.classList.remove('mobile-open'));
-});
+document.getElementById('navLinks').querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('mobile-open')));
+toggle.addEventListener('click', () => nav.classList.toggle('mobile-open'));
 
-// ── Hero parallax ─────────────────────────────────────────
+// ── Hero parallax ────────────────────────────────────────────
 const heroImg = document.getElementById('heroImg');
-heroImg.addEventListener('load', () => requestAnimationFrame(() => heroImg.classList.add('loaded')));
-if (heroImg.complete) requestAnimationFrame(() => heroImg.classList.add('loaded'));
+const onLoaded = () => requestAnimationFrame(() => heroImg.classList.add('loaded'));
+heroImg.complete ? onLoaded() : heroImg.addEventListener('load', onLoaded);
 window.addEventListener('scroll', () => {
   const offset = Math.min(window.scrollY * 0.04, window.innerHeight * 0.055);
   heroImg.style.transform = `scale(1.06) translateY(-${offset}px) translateZ(0)`;
 }, { passive: true });
 
-// ── Marquee ───────────────────────────────────────────────
-const items = [
-  'Relationships', 'Mental Wellbeing', 'Career',
-  'Wild Feminine Recode', 'Sacred Reclamation', 'Body Truth',
-  'Emotional Freedom', 'Self-Trust', 'Feminine Reclamation', 'Power & Softness'
-];
+// ── Marquee ──────────────────────────────────────────────────
+const items = ['Relationships','Mental Wellbeing','Career','Wild Feminine Recode','Sacred Reclamation','Body Truth','Emotional Freedom','Self-Trust','Feminine Reclamation','Power & Softness'];
 const track = document.getElementById('marqueeTrack');
-const fill = items.map(t => `<span class="marquee-item">${t}<span class="marquee-sep">✦</span></span>`).join('');
+const fill = items.map(t => `<span class="marquee-item">${t}<span class="marquee-sep"> ✦ </span></span>`).join('');
 track.innerHTML = fill + fill;
 
-// ── Scroll reveal ─────────────────────────────────────────
+// ── Scroll reveal ────────────────────────────────────────────
 const io = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
 }, { threshold: 0.1 });
 document.querySelectorAll('.rv').forEach(el => io.observe(el));
 
-// ── Accordion ─────────────────────────────────────────────
-document.querySelectorAll('.accordion-header').forEach(header => {
-  header.addEventListener('click', () => {
-    const item = header.parentElement;
-    const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.accordion-item.open').forEach(i => i.classList.remove('open'));
-    if (!isOpen) item.classList.add('open');
+// ── Testimonial lightbox ─────────────────────────────────────
+const lb      = document.getElementById('testiLightbox');
+const lbFace  = document.getElementById('testiLbFace');
+const lbName  = document.getElementById('testiLbName');
+const lbQuote = document.getElementById('testiLbQuote');
+const lbClose = document.getElementById('testiLbClose');
+
+document.querySelectorAll('.testi-card').forEach(card => {
+  card.addEventListener('click', () => {
+    lbFace.src     = card.dataset.face;
+    lbFace.alt     = card.dataset.name;
+    lbName.textContent  = card.dataset.name;
+    lbQuote.textContent = card.dataset.quote;
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
   });
 });
+lbClose.addEventListener('click', closeLb);
+lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+function closeLb() { lb.classList.remove('open'); document.body.style.overflow = ''; }
+
+// ── Begin — Sacred Scan Beam ─────────────────────────────────
+// Gold beam sweeps each step column, lighting content as it passes
+const steps = [
+  document.getElementById('beginStep1'),
+  document.getElementById('beginStep2'),
+  document.getElementById('beginStep3'),
+];
+const scans = [
+  document.getElementById('beginScan1'),
+  document.getElementById('beginScan2'),
+  document.getElementById('beginScan3'),
+];
+
+function runBeamOnStep(step, scan, delay) {
+  setTimeout(() => {
+    const h = step.offsetHeight;
+    scan.style.opacity = '1';
+    scan.style.transition = 'none';
+    scan.style.top = '0px';
+    const start = performance.now();
+    const dur = 900;
+    function tick(now) {
+      const p = Math.min((now - start) / dur, 1);
+      scan.style.top = (p * h) + 'px';
+      if (p < 1) { requestAnimationFrame(tick); }
+      else {
+        scan.style.transition = 'opacity 0.6s';
+        scan.style.opacity = '0';
+      }
+    }
+    requestAnimationFrame(tick);
+    // light the step content with stagger
+    setTimeout(() => step.classList.add('lit'), 80);
+  }, delay);
+}
+
+let beginFired = false;
+const beginGrid = document.getElementById('beginGrid');
+const beginIO = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !beginFired) {
+      beginFired = true;
+      runBeamOnStep(steps[0], scans[0], 0);
+      runBeamOnStep(steps[1], scans[1], 340);
+      runBeamOnStep(steps[2], scans[2], 680);
+      beginIO.unobserve(beginGrid);
+    }
+  });
+}, { threshold: 0.3 });
+beginIO.observe(beginGrid);
 </script>
 </body>
 </html>
