@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Winter Jane — Shamanic Life Coach</title>
+<link rel="icon" type="image/png" href="merkaba-logo.png">
+<link rel="apple-touch-icon" href="merkaba-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500;1,600&family=DM+Sans:wght@200;300;400&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="https://thisiswinterjane.com/_assets/media/543f3c78d3a913eaa7deb8e61cdcd688.jpg">
+
+<style>
+/* ─── TOKENS ──────────────────────────────────────────── */
+:root {
+  --ink:     #1a1815;
+  --charcoal:#2e2e2e;
+  --cream:   #dbcbac;
+  --cream-lt:#e8dcc6;
+  --ivory:   #f5f0e8;
+  --white:   #ffffff;
+  --smoke:   #424242;
+  --muted:   #8a836e;
+  --serif:   'Cormorant Garamond', Georgia, serif;
+  --sans:    'DM Sans', system-ui, sans-serif;
+}
+
+/* ─── RESET ───────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  font-weight: 300;
+  color: var(--ink);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+img { display: block; max-width: 100%; }
+a { text-decoration: none; color: inherit; }
+
+/* ─── CUSTOM CURSOR (desktop only) ───────────────────── */
+@media (hover: hover) {
+  body { cursor: none; }
+  .cursor {
+    position: fixed; top: 0; left: 0;
+    width: 8px; height: 8px;
+    background: var(--cream);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, background 0.2s;
+  }
+  .cursor-ring {
+    position: fixed; top: 0; left: 0;
+    width: 32px; height: 32px;
+    border: 1px solid rgba(219,203,172,0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.18s ease, width 0.25s, height 0.25s, border-color 0.25s;
+  }
+  body:has(a:hover) .cursor-ring,
+  body:has(button:hover) .cursor-ring {
+    width: 52px; height: 52px;
+    border-color: var(--cream);
+  }
+}
+@media (hover: none) {
+  .cursor, .cursor-ring { display: none; }
+}
+
+/* ─── SCROLL REVEAL ───────────────────────────────────── */
+.rv {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+.rv.visible { opacity: 1; transform: none; }
+.rv-delay-1 { transition-delay: 0.1s; }
+.rv-delay-2 { transition-delay: 0.2s; }
+.rv-delay-3 { transition-delay: 0.32s; }
+.rv-delay-4 { transition-delay: 0.44s; }
+
+/* ─── NAV ─────────────────────────────────────────────── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.4rem clamp(1.5rem, 5vw, 4rem);
+  display: flex; align-items: center; justify-content: space-between;
+  transition: background 0.4s ease, backdrop-filter 0.4s ease, padding 0.3s;
+}
+.nav.scrolled {
+  background: rgba(26, 24, 21, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding-top: 1rem; padding-bottom: 1rem;
+}
+.nav-logo img {
+  height: 28px;
+  width: auto;
+  filter: brightness(0) invert(1);
+  opacity: 0.92;
+}
+.nav-right {
+  display: flex; align-items: center; gap: 2.2rem;
+}
+.nav-links {
+  display: flex; gap: 2rem;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(219,203,172,0.75);
+  transition: color 0.25s;
+}
+.nav-links a:hover { color: var(--cream); }
+.nav-cta {
+  display: inline-flex;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--cream);
+  padding: 0.6rem 1.4rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.25s, color 0.25s;
+}
+.nav-cta:hover { background: var(--cream-lt); }
+.nav-toggle {
+  display: none;
+  background: none; border: none; outline: none;
+  -webkit-appearance: none; appearance: none;
+  cursor: pointer;
+  flex-direction: column; gap: 5px;
+  padding: 4px;
+}
+.nav-toggle span {
+  display: block; width: 24px; height: 1px;
+  background: var(--cream);
+  transition: transform 0.3s, opacity 0.3s;
+}
+@media (max-width: 768px) {
+  .nav-links, .nav-cta { display: none; }
+  .nav-toggle { display: flex; }
+  .nav.mobile-open .nav-links {
+    display: flex; flex-direction: column;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--ink);
+    align-items: center; justify-content: center;
+    gap: 2.5rem;
+    z-index: 99;
+  }
+  .nav.mobile-open .nav-links a {
+    font-size: 1rem; letter-spacing: 0.2em;
+    color: var(--cream);
+  }
+}
+
+/* ─── HERO ────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  min-height: 100dvh;
+  display: flex; align-items: flex-end;
+  padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 5vw, 4rem);
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  z-index: 0;
+}
+.hero-bg img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transform: scale(1.08) translateZ(0);
+  will-change: transform;
+  transition: transform 8s ease;
+}
+.hero-bg img.loaded { transform: scale(1.06) translateZ(0); }
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top,
+    rgba(26,24,21,0.92) 0%,
+    rgba(26,24,21,0.55) 45%,
+    rgba(26,24,21,0.22) 100%);
+  z-index: 1;
+}
+.hero-content {
+  position: relative; z-index: 2;
+  max-width: 780px;
+}
+.hero-eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--cream);
+  margin-bottom: 1.4rem;
+}
+.hero-h1 {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  line-height: 1.12;
+  color: var(--ivory);
+  margin-bottom: 1.4rem;
+}
+.hero-h1 em {
+  font-style: italic;
+  color: var(--cream);
+}
+.hero-sub {
+  font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(232,220,198,0.82);
+  max-width: 520px;
+  margin-bottom: 2.4rem;
+}
+.hero-btns {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+}
+.btn-primary {
+  display: inline-flex;
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--cream);
+  padding: 0.85rem 2rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.25s, letter-spacing 0.25s;
+}
+.btn-primary:hover { background: var(--cream-lt); letter-spacing: 0.2em; }
+.btn-ghost {
+  display: inline-flex;
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cream);
+  border: 1px solid rgba(219,203,172,0.45);
+  padding: 0.85rem 2rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: border-color 0.25s, color 0.25s;
+}
+.btn-ghost:hover { border-color: var(--cream); color: var(--cream-lt); }
+
+/* ─── PRESS ───────────────────────────────────────────── */
+.press {
+  background: var(--charcoal);
+  padding: clamp(3.5rem, 7vw, 5.5rem) clamp(1.5rem, 5vw, 4rem);
+}
+.press-eyebrow {
+  text-align: center;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 2.8rem;
+}
+.press-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.press-card {
+  position: relative;
+  background: #262422;
+  border: 1px solid rgba(219,203,172,0.1);
+  padding: 2.8rem 2rem 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 160px;
+  cursor: pointer;
+  transition: transform 0.35s cubic-bezier(0.22,1,0.36,1),
+              box-shadow 0.35s cubic-bezier(0.22,1,0.36,1),
+              border-color 0.35s;
+  overflow: hidden;
+  text-decoration: none;
+}
+.press-card:hover {
+  transform: translateY(-6px) scale(1.025);
+  box-shadow: 0 18px 48px rgba(0,0,0,0.45), 0 0 0 1px rgba(219,203,172,0.22);
+  border-color: rgba(219,203,172,0.25);
+}
+.press-logo {
+  max-width: 200px;
+  max-height: 60px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  opacity: 0.72;
+  transition: opacity 0.3s;
+}
+.press-card:hover .press-logo { opacity: 1; }
+.press-founder-thumb {
+  position: absolute;
+  bottom: 1rem; right: 1rem;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid rgba(219,203,172,0.35);
+  opacity: 0.72;
+  transition: opacity 0.3s, border-color 0.3s;
+}
+.press-card:hover .press-founder-thumb {
+  opacity: 1;
+  border-color: rgba(219,203,172,0.7);
+}
+.press-card-hint {
+  position: absolute;
+  bottom: 1.1rem; left: 50%; transform: translateX(-50%);
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(219,203,172,0);
+  white-space: nowrap;
+  transition: color 0.3s;
+}
+.press-card:hover .press-card-hint { color: rgba(219,203,172,0.45); }
+@media (max-width: 640px) {
+  .press-grid { grid-template-columns: 1fr; max-width: 380px; }
+}
+
+/* ─── MARQUEE ─────────────────────────────────────────── */
+.marquee-wrap {
+  background: var(--cream);
+  overflow: hidden;
+  padding: 1rem 0;
+  border-top: 1px solid rgba(26,24,21,0.1);
+  border-bottom: 1px solid rgba(26,24,21,0.1);
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+.marquee-track:hover { animation-play-state: paused; }
+.marquee-item {
+  display: flex; align-items: center; gap: 1.6rem;
+  padding: 0 1.6rem;
+  font-family: var(--serif);
+  font-size: 0.88rem;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.marquee-sep { opacity: 0.45; font-style: normal; }
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ─── SERVICES ────────────────────────────────────────── */
+.services {
+  background: var(--ivory);
+  padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 5vw, 4rem);
+}
+.section-eyebrow {
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.8rem;
+}
+.section-title {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1.15;
+  color: var(--ink);
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+.section-title em { font-style: italic; color: var(--smoke); }
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+}
+.svc-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 440px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background-size: cover;
+  background-position: center;
+}
+.svc-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top,
+    rgba(26,24,21,0.92) 0%,
+    rgba(26,24,21,0.52) 55%,
+    rgba(26,24,21,0.22) 100%);
+  transition: background 0.35s;
+}
+.svc-card:hover .svc-overlay {
+  background: linear-gradient(to top,
+    rgba(26,24,21,0.96) 0%,
+    rgba(26,24,21,0.62) 55%,
+    rgba(26,24,21,0.3) 100%);
+}
+.svc-body {
+  position: relative; z-index: 1;
+  padding: 2rem 1.8rem;
+}
+.svc-num {
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--cream);
+  opacity: 0.6;
+  margin-bottom: 0.8rem;
+}
+.svc-name {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ivory);
+  margin-bottom: 0.8rem;
+  line-height: 1.2;
+}
+.svc-desc {
+  font-size: 0.82rem;
+  font-weight: 300;
+  line-height: 1.75;
+  color: rgba(219,203,172,0.82);
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.35s;
+  opacity: 0;
+}
+.svc-card:hover .svc-desc { max-height: 140px; opacity: 1; }
+@media (max-width: 768px) {
+  .services-grid { grid-template-columns: 1fr; }
+  .svc-desc { max-height: 140px; opacity: 1; }
+}
+
+/* ─── MEET ────────────────────────────────────────────── */
+.meet {
+  background: var(--charcoal);
+  padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 5vw, 4rem);
+}
+.meet-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(3rem, 6vw, 6rem);
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.meet-img-wrap {
+  position: relative;
+}
+.meet-img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  object-position: center top;
+}
+.meet-img-accent {
+  position: absolute;
+  bottom: -1.5rem; right: -1.5rem;
+  width: 45%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: center top;
+  border: 3px solid var(--charcoal);
+}
+.meet-copy .section-eyebrow { color: var(--muted); }
+.meet-copy .section-title { color: var(--ivory); }
+.meet-quote {
+  font-family: var(--serif);
+  font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+  font-style: italic;
+  font-weight: 300;
+  color: var(--cream);
+  line-height: 1.55;
+  margin-bottom: 1.8rem;
+  padding-left: 1.2rem;
+  border-left: 2px solid rgba(219,203,172,0.4);
+}
+.meet-bio {
+  font-size: 0.9rem;
+  font-weight: 300;
+  line-height: 1.85;
+  color: rgba(219,203,172,0.72);
+  margin-bottom: 2rem;
+}
+@media (max-width: 768px) {
+  .meet-inner { grid-template-columns: 1fr; }
+  .meet-img-accent { display: none; }
+}
+
+/* ─── TESTIMONIALS ────────────────────────────────────── */
+.testimonials {
+  background: var(--ivory);
+  padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 5vw, 4rem);
+}
+.testi-inner { max-width: 800px; margin: 0 auto; }
+.accordion-item {
+  border-bottom: 1px solid rgba(46,46,46,0.14);
+}
+.accordion-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.4rem 0;
+  cursor: pointer;
+  gap: 1rem;
+}
+.accordion-name {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--smoke);
+}
+.accordion-snippet {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--muted);
+  flex: 1;
+  padding-left: 1.2rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.accordion-icon {
+  font-size: 1.2rem;
+  color: var(--muted);
+  transition: transform 0.3s;
+  flex-shrink: 0;
+}
+.accordion-item.open .accordion-icon { transform: rotate(45deg); }
+.accordion-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1);
+}
+.accordion-item.open .accordion-body { max-height: 400px; }
+.accordion-quote {
+  font-family: var(--serif);
+  font-size: clamp(1.05rem, 2vw, 1.3rem);
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--ink);
+  padding-bottom: 2rem;
+  padding-left: 0;
+}
+
+/* ─── HOW TO BEGIN ────────────────────────────────────── */
+.begin {
+  background: var(--charcoal);
+  padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 5vw, 4rem);
+}
+.begin-inner { max-width: 1000px; margin: 0 auto; }
+.begin-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+  margin-top: 3.5rem;
+}
+.begin-step { }
+.begin-num {
+  font-family: var(--serif);
+  font-size: 3.5rem;
+  font-weight: 300;
+  color: rgba(219,203,172,0.2);
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+.begin-title {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  font-style: italic;
+  color: var(--cream-lt);
+  margin-bottom: 0.8rem;
+}
+.begin-desc {
+  font-size: 0.85rem;
+  font-weight: 300;
+  line-height: 1.8;
+  color: rgba(219,203,172,0.65);
+}
+.begin-cta {
+  margin-top: 3.5rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+@media (max-width: 640px) {
+  .begin-grid { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+/* ─── CTA BAND ────────────────────────────────────────── */
+.cta-band {
+  background: var(--cream);
+  padding: clamp(4rem, 8vw, 6rem) clamp(1.5rem, 5vw, 4rem);
+  text-align: center;
+}
+.cta-band-title {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  color: var(--ink);
+  line-height: 1.2;
+  margin-bottom: 0.6rem;
+}
+.cta-band-title em { font-style: italic; }
+.cta-band-sub {
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: var(--smoke);
+  margin-bottom: 2.2rem;
+  line-height: 1.7;
+}
+.btn-dark {
+  display: inline-flex;
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cream-lt);
+  background: var(--ink);
+  padding: 0.9rem 2.2rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.25s, letter-spacing 0.25s;
+}
+.btn-dark:hover { background: var(--charcoal); letter-spacing: 0.2em; }
+
+/* ─── FOOTER ──────────────────────────────────────────── */
+footer {
+  background: var(--ink);
+  border-radius: 3rem 3rem 0 0;
+  padding: clamp(3rem, 6vw, 4.5rem) clamp(1.5rem, 5vw, 4rem) 2rem;
+}
+.footer-inner {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+.footer-logo img {
+  height: 22px;
+  width: auto;
+  filter: brightness(0) invert(1);
+  opacity: 0.7;
+  margin-bottom: 0.8rem;
+}
+.footer-tagline {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  font-style: italic;
+  color: rgba(219,203,172,0.55);
+  line-height: 1.5;
+}
+.footer-col-title {
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.2rem;
+}
+.footer-links { list-style: none; }
+.footer-links li + li { margin-top: 0.65rem; }
+.footer-links a {
+  font-size: 0.82rem;
+  font-weight: 300;
+  color: rgba(219,203,172,0.5);
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--cream); }
+.footer-bottom {
+  border-top: 1px solid rgba(219,203,172,0.08);
+  padding-top: 1.5rem;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 0.5rem;
+}
+.footer-copy {
+  font-size: 0.72rem;
+  color: rgba(219,203,172,0.28);
+  letter-spacing: 0.05em;
+}
+.footer-ig {
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(219,203,172,0.4);
+  transition: color 0.2s;
+}
+.footer-ig:hover { color: var(--cream); }
+@media (max-width: 640px) {
+  .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="#" class="nav-logo">
+    <img src="https://thisiswinterjane.com/_assets/media/a03ca0d424ef0b053cee7b64ab4cfe10.png" alt="Winter Jane">
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Work With Me</a></li>
+      <li><a href="#testimonials">Client Love</a></li>
+      <li><a href="#begin">Begin</a></li>
+    </ul>
+    <a href="https://thisiswinterjane.com/" target="_blank" class="nav-cta">Begin Here</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg">
+    <img
+      src="https://thisiswinterjane.com/_assets/media/543f3c78d3a913eaa7deb8e61cdcd688.jpg"
+      alt="Winter Jane"
+      id="heroImg"
+      fetchpriority="high"
+    >
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow rv">Shamanic Life Coach</p>
+    <h1 class="hero-h1 rv rv-delay-1">
+      Reclaim the woman<br><em>underneath</em> the survival strategy.
+    </h1>
+    <p class="hero-sub rv rv-delay-2">
+      Wild Feminine Recode — private support for the woman ready to return to her power, softness, truth and self-trust.
+    </p>
+    <div class="hero-btns rv rv-delay-3">
+      <a href="https://thisiswinterjane.com/" target="_blank" class="btn-primary">Fill Out the Intake Form</a>
+      <a href="#services" class="btn-ghost">Explore the Work</a>
+    </div>
+  </div>
+</section>
+
+<!-- PRESS -->
+<section class="press" id="press">
+  <p class="press-eyebrow rv">As Seen On</p>
+  <div class="press-grid">
+
+    <!-- Card 1 — with founder thumb -->
+    <a href="#" class="press-card rv rv-delay-1">
+      <img
+        src="https://thisiswinterjane.com/_assets/media/ee190fe7fbdfb2c7b1b92626e834d97e.png"
+        alt="Press feature"
+        class="press-logo"
+      >
+      <img
+        src="https://thisiswinterjane.com/_assets/media/21904333d6b90f0d7368717b2c57337f.png"
+        alt="Winter Jane"
+        class="press-founder-thumb"
+      >
+      <span class="press-card-hint">Read Feature →</span>
+    </a>
+
+    <!-- Card 2 — no thumb, centered solo -->
+    <a href="#" class="press-card rv rv-delay-2">
+      <img
+        src="https://thisiswinterjane.com/_assets/media/5995fc87759a912e684a71243a90f161.png"
+        alt="Press feature"
+        class="press-logo"
+      >
+      <span class="press-card-hint">Read Feature →</span>
+    </a>
+
+    <!-- Card 3 — with founder thumb -->
+    <a href="#" class="press-card rv rv-delay-3">
+      <img
+        src="https://thisiswinterjane.com/_assets/media/8ce538b989c2617930a86dcab6dc9875.png"
+        alt="Press feature"
+        class="press-logo"
+      >
+      <img
+        src="https://thisiswinterjane.com/_assets/media/21904333d6b90f0d7368717b2c57337f.png"
+        alt="Winter Jane"
+        class="press-founder-thumb"
+      >
+      <span class="press-card-hint">Read Feature →</span>
+    </a>
+
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track" id="marqueeTrack">
+    <!-- filled by JS -->
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="rv">
+    <p class="section-eyebrow">How I Can Help</p>
+    <h2 class="section-title">The work lives at the intersection of<br><em>power, softness, and body truth.</em></h2>
+  </div>
+  <div class="services-grid">
+
+    <div class="svc-card rv rv-delay-1" style="background-image:url('https://images.unsplash.com/photo-1461532257246-777de18cd58b?q=80&w=800&auto=format&fit=crop')">
+      <div class="svc-overlay"></div>
+      <div class="svc-body">
+        <p class="svc-num">01 · Relationships</p>
+        <h3 class="svc-name">Love & Belonging</h3>
+        <p class="svc-desc">For the woman learning to love, receive, grieve, desire, and choose without leaving herself. We work with attachment, safe love, sexuality, romantic grief, self-trust, and the patterns that taught you to perform connection.</p>
+      </div>
+    </div>
+
+    <div class="svc-card rv rv-delay-2" style="background-image:url('https://images.unsplash.com/photo-1585860095562-08f80ef43d43?q=80&w=800&auto=format&fit=crop')">
+      <div class="svc-overlay"></div>
+      <div class="svc-body">
+        <p class="svc-num">02 · Mental Wellbeing</p>
+        <h3 class="svc-name">Inner Architecture</h3>
+        <p class="svc-desc">For the woman whose body is telling the truth before her mind can explain it. We work with resentment, family guilt, emotional over-responsibility, avoidance, urgency and the need for a new inner architecture.</p>
+      </div>
+    </div>
+
+    <div class="svc-card rv rv-delay-3" style="background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80')">
+      <div class="svc-overlay"></div>
+      <div class="svc-body">
+        <p class="svc-num">03 · Career</p>
+        <h3 class="svc-name">Reclaimed Ambition</h3>
+        <p class="svc-desc">For the woman who looks successful, but feels exhausted by the identity that got her here. We work with burnout, support resistance, over-performing, visibility fatigue, and the body's refusal to keep building from pressure.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MEET -->
+<section class="meet" id="about">
+  <div class="meet-inner">
+    <div class="meet-img-wrap rv">
+      <img
+        class="meet-img"
+        src="https://thisiswinterjane.com/_assets/media/82a87e2d6c52c9005de75338c1b4a863.jpg"
+        alt="Winter Jane"
+      >
+      <img
+        class="meet-img-accent"
+        src="https://thisiswinterjane.com/_assets/media/67b616f2bd7752e7b671129c5228d458.jpg"
+        alt="Winter Jane"
+      >
+    </div>
+    <div class="meet-copy rv rv-delay-2">
+      <p class="section-eyebrow">Hello, I'm</p>
+      <h2 class="section-title" style="color:var(--ivory)"><em>Winter Jane</em></h2>
+      <blockquote class="meet-quote">
+        "This is not about becoming someone new. It is about getting you back to the woman underneath the survival strategy."
+      </blockquote>
+      <p class="meet-bio">
+        I help women get free from the patterns, roles and invisible agreements that keep them over-functioning, self-abandoning, performing strength and surviving inside lives they've outgrown. My work lives at the intersection of power, softness, body truth, relationships, emotional freedom and feminine reclamation.
+      </p>
+      <p class="meet-bio">
+        With 20+ years of experience in the spiritual wellness world I've helped thousands of women on the journey of reclaiming their authenticity and hearts.
+      </p>
+      <a href="https://thisiswinterjane.com/" target="_blank" class="btn-primary" style="background:var(--cream);color:var(--ink);">Work With Winter</a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="testi-inner">
+    <div class="rv">
+      <p class="section-eyebrow">Client Love</p>
+      <h2 class="section-title">Words from the <em>women who've done the work.</em></h2>
+    </div>
+    <div class="accordion rv rv-delay-1" id="accordion">
+
+      <div class="accordion-item open">
+        <div class="accordion-header">
+          <span class="accordion-name">Elizabeth C.</span>
+          <span class="accordion-snippet">"I know my soul has grown leaps and bounds…"</span>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-body">
+          <p class="accordion-quote">"I know my soul has grown leaps and bounds because of you… The way I was guided through with your intuitive skills was amazing and an experience I'll never forget — just feeling held and supported the entire way through was AMAZING. Such a gift!!! I love you so much!!!"</p>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <span class="accordion-name">Kristina Z.</span>
+          <span class="accordion-snippet">"Winter is a true manifestor and visionary…"</span>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-body">
+          <p class="accordion-quote">"Winter is a true manifestor and visionary. Not only do I look forward to our calls because I know I'm going to leave feeling focused and reenergized, but completely ready to tackle my next steps in my own business. Highly recommend 💜"</p>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <span class="accordion-name">Nelle G.</span>
+          <span class="accordion-snippet">"I really feel like I've skipped a whole bunch of timelines…"</span>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-body">
+          <p class="accordion-quote">"I really feel like I've skipped a whole bunch of timelines to be where I am now, incredible clients, the $ I'd dreamed of and I'm so much happier in my family life. 'Gratitude' does not even go close to how I feel about her energetic upgrades. Thank you so much lady… you are one of a kind 🙏🏼"</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO BEGIN -->
+<section class="begin" id="begin">
+  <div class="begin-inner">
+    <div class="rv">
+      <p class="section-eyebrow" style="color:var(--muted)">What's My Next Step?</p>
+      <h2 class="section-title" style="color:var(--ivory)">Beginning is<br><em>simpler than you think.</em></h2>
+    </div>
+    <div class="begin-grid">
+      <div class="begin-step rv rv-delay-1">
+        <p class="begin-num">01</p>
+        <h3 class="begin-title">Fill Out the Intake Form</h3>
+        <p class="begin-desc">The intake form gives you the space to put everything that's been weighing you down; I want you to go all in on the areas that have been keeping you stuck, frustrated and unclear. It lays the foundation for the introductory Clarity Call.</p>
+      </div>
+      <div class="begin-step rv rv-delay-2">
+        <p class="begin-num">02</p>
+        <h3 class="begin-title">Book Your Clarity Call</h3>
+        <p class="begin-desc">When you finish the intake form you'll see a hyperlink at the end to book your introductory Clarity Call, a 60-minute deep dive with me to get to the root of one of the areas you've shared in your form.</p>
+      </div>
+      <div class="begin-step rv rv-delay-3">
+        <p class="begin-num">03</p>
+        <h3 class="begin-title">Receive Your Next Steps</h3>
+        <p class="begin-desc">At the end of your call you'll receive next steps in the form of aligned actions, a healing tool and any helpful details you might need for continuing your journey, if you feel inclined to expand upon your transformation.</p>
+      </div>
+    </div>
+    <div class="begin-cta rv rv-delay-4">
+      <a href="https://thisiswinterjane.com/" target="_blank" class="btn-primary">Fill Out the Intake Form</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="cta-band rv">
+  <h2 class="cta-band-title">The old pattern is asking<br>to be <em>interrupted.</em></h2>
+  <p class="cta-band-sub">Only a few spots left — this work is intimate, private, and deeply personal.</p>
+  <a href="https://thisiswinterjane.com/" target="_blank" class="btn-dark">Begin Your Reclamation</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">
+        <img src="https://thisiswinterjane.com/_assets/media/a03ca0d424ef0b053cee7b64ab4cfe10.png" alt="Winter Jane">
+      </div>
+      <p class="footer-tagline">Sacred support for the woman<br>ready to return to herself.</p>
+    </div>
+    <div>
+      <p class="footer-col-title">Navigate</p>
+      <ul class="footer-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Work With Me</a></li>
+        <li><a href="#testimonials">Client Love</a></li>
+        <li><a href="#begin">Begin</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-col-title">Connect</p>
+      <ul class="footer-links">
+        <li><a href="https://www.instagram.com/" target="_blank">Instagram</a></li>
+        <li><a href="https://thisiswinterjane.com/" target="_blank">Official Site</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 Winter Jane Shamanic Coaching</p>
+    <a href="https://www.instagram.com/" target="_blank" class="footer-ig">Follow on Instagram →</a>
+  </div>
+</footer>
+
+<script>
+// ── Cursor ────────────────────────────────────────────────
+if (!window.matchMedia('(hover: none)').matches) {
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = -100, my = -100, rx = -100, ry = -100;
+  window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animateCursor() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    cursor.style.left = mx + 'px';
+    cursor.style.top  = my + 'px';
+    ring.style.left   = rx + 'px';
+    ring.style.top    = ry + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+}
+
+// ── Nav scroll ────────────────────────────────────────────
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+// ── Nav mobile ────────────────────────────────────────────
+const toggle = document.getElementById('navToggle');
+const navLinks = document.getElementById('navLinks');
+toggle.addEventListener('click', () => {
+  nav.classList.toggle('mobile-open');
+});
+navLinks.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => nav.classList.remove('mobile-open'));
+});
+
+// ── Hero parallax ─────────────────────────────────────────
+const heroImg = document.getElementById('heroImg');
+heroImg.addEventListener('load', () => requestAnimationFrame(() => heroImg.classList.add('loaded')));
+if (heroImg.complete) requestAnimationFrame(() => heroImg.classList.add('loaded'));
+window.addEventListener('scroll', () => {
+  const offset = Math.min(window.scrollY * 0.04, window.innerHeight * 0.055);
+  heroImg.style.transform = `scale(1.06) translateY(-${offset}px) translateZ(0)`;
+}, { passive: true });
+
+// ── Marquee ───────────────────────────────────────────────
+const items = [
+  'Relationships', 'Mental Wellbeing', 'Career',
+  'Wild Feminine Recode', 'Sacred Reclamation', 'Body Truth',
+  'Emotional Freedom', 'Self-Trust', 'Feminine Reclamation', 'Power & Softness'
+];
+const track = document.getElementById('marqueeTrack');
+const fill = items.map(t => `<span class="marquee-item">${t}<span class="marquee-sep">✦</span></span>`).join('');
+track.innerHTML = fill + fill;
+
+// ── Scroll reveal ─────────────────────────────────────────
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+// ── Accordion ─────────────────────────────────────────────
+document.querySelectorAll('.accordion-header').forEach(header => {
+  header.addEventListener('click', () => {
+    const item = header.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.accordion-item.open').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  });
+});
+</script>
+</body>
+</html>
